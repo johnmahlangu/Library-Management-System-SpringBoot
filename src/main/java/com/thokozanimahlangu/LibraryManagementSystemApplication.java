@@ -1,4 +1,4 @@
-package com.thokozanimahlangu.Library.Management.System;
+package com.thokozanimahlangu;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
