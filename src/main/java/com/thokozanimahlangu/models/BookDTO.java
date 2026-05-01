@@ -1,4 +1,4 @@
-package com.thokozanimahlangu.Library.Management.System.models;
+package com.thokozanimahlangu.models;
 
 import java.time.Year;
 import java.util.UUID;
@@ -10,6 +10,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Data Transfer Object for Book entity.
+ * Used for transporting book between the REST layer and the Service layer.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
