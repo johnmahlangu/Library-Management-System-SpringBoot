@@ -21,10 +21,16 @@ import lombok.NoArgsConstructor;
 public class BookDTO {
 
 	private UUID id;
+	
 	@NotBlank
-	private String Title;
+	private String title;
+	
+	@NotBlank
+	private String author;
+	
 	@NotNull
 	private Year publicationYear;
+	
 	@NotBlank
 	private String ISBN;
 	
