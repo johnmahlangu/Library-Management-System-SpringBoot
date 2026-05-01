@@ -23,6 +23,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Persistence Entity representing a Book in the database.
+ * Maps the business object to the 'book' table.
+ */
+
 @Entity
 @Getter
 @Setter
@@ -57,9 +62,5 @@ public class Book {
 	private LocalDateTime createdDate;
 	
 	@UpdateTimestamp
-	private LocalDateTime updatedDate;
-	
-	
-	
-	
+	private LocalDateTime updateDate;
 }

@@ -7,6 +7,10 @@ import java.util.UUID;
 
 import com.thokozanimahlangu.models.BookDTO;
 
+/**
+ * Service Interface for managing Book operations.
+ * Defines the contract for business logic related to BookDTOs.
+ */
 public interface BookService {
 
 	Optional<BookDTO> getBookById(UUID id);
