@@ -28,7 +28,7 @@ public class StudentDTO {
 	private String lastName;
 	
 	@NotBlank
-	private String studentEmail;
+	private String email;
 	
 	private LocalDateTime createdDate;
 	
