@@ -1,5 +1,6 @@
 package com.thokozanimahlangu.models;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
@@ -28,4 +29,9 @@ public class StudentDTO {
 	
 	@NotBlank
 	private String studentEmail;
+	
+	private LocalDateTime createdDate;
+	
+	private LocalDateTime updateDate;
+	
 }

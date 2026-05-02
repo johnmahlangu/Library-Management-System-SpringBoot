@@ -1,5 +1,6 @@
 package com.thokozanimahlangu.models;
 
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.UUID;
 
@@ -34,4 +35,7 @@ public class BookDTO {
 	@NotBlank
 	private String ISBN;
 	
+	private LocalDateTime createdDate;
+	
+	private LocalDateTime updateDate;
 }
