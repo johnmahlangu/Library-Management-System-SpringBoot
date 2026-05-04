@@ -17,12 +17,12 @@ public interface StudentService {
 	
 	List<StudentDTO> listStudents(String firstName, String lastName, String email);
 	
-	StudentDTO saveNewStudent(UUID id, StudentDTO student);
+	StudentDTO saveNewStudent(StudentDTO studentDto);
 	
-	Optional<StudentDTO> updateStudentById(UUID id, StudentDTO student);
+	Optional<StudentDTO> updateStudentById(UUID id, StudentDTO studentDto);
 	
-	Optional<StudentDTO> deleteStudentById(UUID id);
+	Boolean deleteStudentById(UUID id);
 	
-	Optional<StudentDTO> patchStudentById(UUID id, StudentDTO student);
+	Optional<StudentDTO> patchStudentById(UUID id, StudentDTO studentDto);
 	
 }
