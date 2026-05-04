@@ -5,8 +5,6 @@ import org.mapstruct.Mapper;
 import com.thokozanimahlangu.entities.Student;
 import com.thokozanimahlangu.models.StudentDTO;
 
-
-
 /**
  * Mapper interface used to convert between Student entities and StudentDTOs.
  */

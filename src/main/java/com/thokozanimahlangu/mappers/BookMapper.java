@@ -16,7 +16,7 @@ public interface BookMapper {
      * Converts a Book entity to a Data Transfer Object(BookDTO).
      * Used when sending book data from the database to the client.
      */
-	BookDTO booktoBookDTO(Book book);
+	BookDTO bookToBookDTO(Book book);
 	
 	/**
      * Converts a BookDTO back into a Book entity.
