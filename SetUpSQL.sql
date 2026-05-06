@@ -1,20 +1,19 @@
 CREATE TABLE Books (
     BookID INT PRIMARY KEY,
-    Title VARCHAR(255),
-    Author VARCHAR(255),
-    IsAvailable BOOLEAN DEFAULT TRUE
+    Title VARCHAR(36),
+    Author VARCHAR(36),
 );
 
 CREATE TABLE Students (
     StudentID INT PRIMARY KEY,
-    StudentName VARCHAR(255),
-    Email VARCHAR(255)
+    StudentName VARCHAR(36),
+    Email VARCHAR(36)
 );
 
 CREATE TABLE IssueBook (
-    IssueID INT PRIMARY KEY AUTO_INCREMENT,
-    BookID INT,
-    StudentID INT,
+    IssueID VARCHAR(36) PRIMARY KEY AUTO_INCREMENT,
+    BookID VARCHAR(36),
+    StudentID VARCHAR(36),
     IssueDate DATE,
     DueDate DATE,
     FOREIGN KEY (BookID) REFERENCES Books(BookID),
