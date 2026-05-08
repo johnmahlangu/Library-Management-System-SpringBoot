@@ -26,9 +26,9 @@ public class BookSpecification {
     }
 	
 	//Creates an exact match search for the ISBN.
-	public static Specification<Book> hasISBN(String isbn) {
+	public static Specification<Book> hasIsbn(String isbn) {
         return (root, query, cb) -> !StringUtils.hasText(isbn) ? null : 
-               cb.equal(root.get("ISBN"), isbn);
+               cb.equal(root.get("isbn"), isbn);
     }
 	// Creates an exact match search for the publication year.
 	public static Specification<Book> hasPublicationYear(Integer publicationYear) {
