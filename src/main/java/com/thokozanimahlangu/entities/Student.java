@@ -38,25 +38,30 @@ public class Student {
 	@GeneratedValue(generator = "UUID")
 	@UuidGenerator
 	@JdbcTypeCode(SqlTypes.CHAR)
-	@Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
+	@Column(name = "id", length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
 	private UUID id;
 	
 	@NotBlank
-	@Size(max = 20)
+	@Size(max = 100)
+	@Column(name = "first_name")
 	private String firstName;
 	
 	@NotBlank
-	@Size(max = 20)
+	@Size(max = 100)
+	@Column(name = "last_name")
 	private String lastName;
 	
 	@NotBlank
-	@Size(max = 40)
+	@Size(max = 100)
+	@Column(name = "email")
 	private String email;
 		
 	@CreationTimestamp
+	@Column(name = "created_date", updatable = false)
 	private LocalDateTime createdDate;
 	
 	@UpdateTimestamp
+	@Column(name = "update_date")
 	private LocalDateTime updateDate;
 	
 }
