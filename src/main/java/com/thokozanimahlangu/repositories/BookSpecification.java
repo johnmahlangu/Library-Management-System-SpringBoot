@@ -1,8 +1,6 @@
 package com.thokozanimahlangu.repositories;
 
 
-import java.time.Year;
-
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
@@ -28,12 +26,12 @@ public class BookSpecification {
     }
 	
 	//Creates an exact match search for the ISBN.
-	public static Specification<Book> hasISBN(String ISBN) {
-        return (root, query, cb) -> !StringUtils.hasText(ISBN) ? null : 
-               cb.equal(root.get("ISBN"), ISBN);
+	public static Specification<Book> hasISBN(String isbn) {
+        return (root, query, cb) -> !StringUtils.hasText(isbn) ? null : 
+               cb.equal(root.get("ISBN"), isbn);
     }
 	// Creates an exact match search for the publication year.
-	public static Specification<Book> hasPublicationYear(Year publicationYear) {
+	public static Specification<Book> hasPublicationYear(Integer publicationYear) {
         return (root, query, cb) -> publicationYear  == null ? null : 
                cb.equal(root.get("publicationYear"), publicationYear);
     }
