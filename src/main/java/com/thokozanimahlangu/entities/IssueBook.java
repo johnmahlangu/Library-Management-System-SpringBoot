@@ -22,7 +22,7 @@ import lombok.Setter;
 
 /**
  * Persistence Entity representing a IssueBook in the database.
- * Maps the business object to the 'issueBook' table.
+ * Maps the business object to the 'IssueBook' table.
  */
 
 @Entity
@@ -37,15 +37,21 @@ public class IssueBook {
 	@GeneratedValue(generator = "UUID")
 	@UuidGenerator
 	@JdbcTypeCode(SqlTypes.CHAR)
-	@Column(length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
+	@Column(name = "id", length = 36, columnDefinition = "varchar(36)", updatable = false, nullable = false)
 	private UUID id;
 	
 	@CreationTimestamp
+	@Column(name = "issue_date", updatable = false)
 	private LocalDateTime issueDate;
 	
 	@UpdateTimestamp
+	@Column(name = "update_date")
 	private LocalDateTime updateDate;
 	
+	@Column(name = "return_date")
+	private LocalDate returnDate;
+	
+	@Column(name = "due_date")
 	private LocalDate dueDate;
 	
 }
