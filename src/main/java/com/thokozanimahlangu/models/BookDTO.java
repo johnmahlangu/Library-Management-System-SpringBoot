@@ -1,7 +1,6 @@
 package com.thokozanimahlangu.models;
 
 import java.time.LocalDateTime;
-import java.time.Year;
 import java.util.UUID;
 
 import jakarta.validation.constraints.NotBlank;
@@ -30,10 +29,10 @@ public class BookDTO {
 	private String author;
 	
 	@NotNull
-	private Year publicationYear;
+	private Integer publicationYear;
 	
 	@NotBlank
-	private String ISBN;
+	private String isbn;
 	
 	private LocalDateTime createdDate;
 	
