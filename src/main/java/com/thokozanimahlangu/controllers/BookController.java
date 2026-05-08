@@ -1,6 +1,5 @@
 package com.thokozanimahlangu.controllers;
 
-import java.time.Year;
 import java.util.List;
 import java.util.UUID;
 
@@ -102,11 +101,11 @@ public class BookController {
      * Filters are passed as query parameters
      */
 	@GetMapping(BOOK_PATH)
-	public List<BookDTO> listBooks(@RequestParam(required = false) String firstName,
-								   @RequestParam(required = false) String lastName,
-							       @RequestParam(required = false) String email,
-								   @RequestParam(required = false) Year publicationYear) {
+	public List<BookDTO> listBooks(@RequestParam(required = false) String title,
+								   @RequestParam(required = false) String author,
+							       @RequestParam(required = false) Integer publicationYear,
+								   @RequestParam(required = false) String isbn) {
 		
-		return bookService.listBooks(firstName, lastName, email, publicationYear);
+		return bookService.listBooks(title, author, isbn, publicationYear);
 	}		
 }
