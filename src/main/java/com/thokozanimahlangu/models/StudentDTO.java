@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class StudentDTO {
 
-	private UUID Id;
+	private UUID id;
 	
 	@NotBlank
 	private String firstName;
