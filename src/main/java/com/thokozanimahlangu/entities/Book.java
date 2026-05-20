@@ -57,7 +57,7 @@ public class Book {
 	private Integer publicationYear;
 	
 	@NotBlank
-	@Size(max = 13)
+	@Size(max = 17)
 	@Column(name = "isbn")
 	private String isbn;
 	
