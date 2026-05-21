@@ -69,7 +69,7 @@ public class BookController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Location", BOOK_PATH + "/" + newBook.getId());
 		
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(headers, HttpStatus.CREATED);
 	}
 	
 	/**
