@@ -1,6 +1,5 @@
 package com.thokozanimahlangu.services;
 
-import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,7 +14,7 @@ public interface BookService {
 
 	Optional<BookDTO> getBookById(UUID id);
 	
-	List<BookDTO> listBooks(String title, String author, String ISBN, Year publicationYear);
+	List<BookDTO> listBooks(String title, String author, String isbn, Integer publicationYear);
 	
 	BookDTO saveNewBook(BookDTO newBook);
 	

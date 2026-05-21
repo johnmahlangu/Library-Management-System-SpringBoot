@@ -1,6 +1,5 @@
 package com.thokozanimahlangu.services;
 
-import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -30,13 +29,13 @@ public class BookServiceJPA implements BookService{
 	private final BookRepository bookRepository;
 	private final BookMapper bookMapper;
 	
-	public List<BookDTO> listBooks(String title, String author, String ISBN, Year publicationYear) {
+	public List<BookDTO> listBooks(String title, String author, String isbn, Integer publicationYear) {
 		
 		// Build dynamic query criteria based on provided parameters
 		Specification<Book> spec = Specification.where(BookSpecification.hasAuthor(author))
 												.and(BookSpecification.hasTitle(title))
 												.and(BookSpecification.hasPublicationYear(publicationYear))
-												.and(BookSpecification.hasISBN(ISBN));
+												.and(BookSpecification.hasIsbn(isbn));
 		
 		// Fetch entities, map to DTOs, and return as a list
 		return bookRepository.findAll(spec)
@@ -74,7 +73,7 @@ public class BookServiceJPA implements BookService{
 		return bookRepository.findById(id)
 				.map(foundBook -> {
 					foundBook.setAuthor(bookDto.getAuthor());
-					foundBook.setISBN(bookDto.getISBN());
+					foundBook.setIsbn(bookDto.getIsbn());
 					foundBook.setPublicationYear(bookDto.getPublicationYear());
 					foundBook.setTitle(bookDto.getTitle());
 					
@@ -108,8 +107,8 @@ public class BookServiceJPA implements BookService{
 					if (StringUtils.hasText(bookDto.getAuthor())) {
 						foundBook.setAuthor(bookDto.getAuthor());
 					}
-					if (StringUtils.hasText(bookDto.getISBN())) {
-						foundBook.setISBN(bookDto.getISBN());
+					if (StringUtils.hasText(bookDto.getIsbn())) {
+						foundBook.setIsbn(bookDto.getIsbn());
 					}
 					if (StringUtils.hasText(bookDto.getTitle())) {
 						foundBook.setTitle(bookDto.getTitle());
