@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookController {
 
-	public static final String BOOK_PATH = "/api/book";
+	public static final String BOOK_PATH = "/api/v1/books";
 	public static final String BOOK_PATH_ID = BOOK_PATH + "/{bookId}";
 	
 	private final BookService bookService;

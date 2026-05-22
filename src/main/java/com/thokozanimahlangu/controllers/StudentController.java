@@ -25,7 +25,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StudentController {
 
-	private static final String STUDENT_PATH = "/api/student";
+	private static final String STUDENT_PATH = "/api/v1/students";
 	private static final String STUDENT_PATH_ID = STUDENT_PATH + "/{studentId}";
 	
 	private final StudentService studentService;
