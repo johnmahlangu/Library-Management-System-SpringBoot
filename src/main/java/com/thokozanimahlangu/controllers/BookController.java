@@ -36,7 +36,7 @@ public class BookController {
      * Validates input and returns 204 No Content upon success
      */
 	@PatchMapping(BOOK_PATH_ID)
-	public ResponseEntity<?> patchBook(@PathVariable("bookId") UUID id, @Validated @RequestBody BookDTO book) {
+	public ResponseEntity<?> patchBook(@PathVariable("bookId") UUID id, @RequestBody BookDTO book) {
 		
 		bookService.patchBookById(id, book);
 		

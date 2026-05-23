@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -99,8 +100,8 @@ public class StudentController {
      * Partially update an existing student
      * Validates input and returns 204 No Content upon success
      */
-	@PutMapping(STUDENT_PATH_ID)
-	public ResponseEntity<?> patchStudent(@PathVariable("studentId") UUID id, @Validated @RequestBody StudentDTO student) {
+	@PatchMapping(STUDENT_PATH_ID)
+	public ResponseEntity<?> patchStudent(@PathVariable("studentId") UUID id, @RequestBody StudentDTO student) {
 		
 		if (studentService.patchStudentById(id, student).isEmpty()) {
 			

@@ -19,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -201,25 +202,17 @@ class BookControllerTest {
 		
 		BookDTO originalBook = createValidBook();
 		
-		BookDTO patchBook = BookDTO.builder()
-								   .title("New Title")
-								   .author(originalBook.getAuthor())
-								   .isbn(originalBook.getIsbn())
-								   .publicationYear(originalBook.getPublicationYear())
-								   .build();
+		Map<String,String> patch = Map.of("title", "New Title");
 		
 		mockMvc.perform(patch(BookController.BOOK_PATH_ID, originalBook.getId())
 			   .accept(MediaType.APPLICATION_JSON)
 			   .contentType(MediaType.APPLICATION_JSON)
-			   .content(objectMapper.writeValueAsString(patchBook)))
+			   .content(objectMapper.writeValueAsString(patch)))
 			   .andExpect(status().isNoContent());
 		
 		// Verify that target fields are partially updated correctly by the controller before being transmitted to the service layer
 		verify(bookService).patchBookById(eq(originalBook.getId()), bookCaptor.capture());		
-		assertThat(bookCaptor.getValue())
-		 					 .usingRecursiveComparison()
-		 					 .ignoringFields("id", "createdDate", "updateDate")
-		 					 .isEqualTo(patchBook);
+		assertThat(patch.get("title")).isEqualTo(bookCaptor.getValue());
 	}
 	
 	/**
