@@ -101,7 +101,7 @@ public class StudentController {
      * Validates input and returns 204 No Content upon success
      */
 	@PatchMapping(STUDENT_PATH_ID)
-	public ResponseEntity<?> patchStudent(@PathVariable("studentId") UUID id, @Validated @RequestBody StudentDTO student) {
+	public ResponseEntity<?> patchStudent(@PathVariable("studentId") UUID id, @RequestBody StudentDTO student) {
 		
 		if (studentService.patchStudentById(id, student).isEmpty()) {
 			
