@@ -8,8 +8,8 @@ import com.thokozanimahlangu.models.BookDTO;
 /**
  * Mapper interface used to convert between Book entities and BookDTOs.
  */
+@Mapper(componentModel = "spring")
 
-@Mapper
 public interface BookMapper {
 
 	/**

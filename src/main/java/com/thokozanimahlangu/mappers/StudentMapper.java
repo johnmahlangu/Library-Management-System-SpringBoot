@@ -8,7 +8,7 @@ import com.thokozanimahlangu.models.StudentDTO;
 /**
  * Mapper interface used to convert between Student entities and StudentDTOs.
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface StudentMapper {
 
 	/**
