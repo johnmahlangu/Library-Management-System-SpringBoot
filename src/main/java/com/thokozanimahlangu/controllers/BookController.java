@@ -38,7 +38,10 @@ public class BookController {
 	@PatchMapping(BOOK_PATH_ID)
 	public ResponseEntity<?> patchBook(@PathVariable("bookId") UUID id, @RequestBody BookDTO book) {
 		
-		bookService.patchBookById(id, book);
+		if(bookService.patchBookById(id, book).isEmpty()) {
+			
+			throw new NotFoundException();
+		}
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
