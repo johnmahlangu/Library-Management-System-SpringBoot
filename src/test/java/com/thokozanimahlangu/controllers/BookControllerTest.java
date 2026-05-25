@@ -128,7 +128,7 @@ class BookControllerTest {
 			   .andExpect(status().isCreated())
 			   .andExpect(header().exists("Location"));
 		
-		// Verify the exact state of the book sent to the service layer
+		// Verify the controller correctly mapped and passed the created book data to the service layer
 		verify(bookService).saveNewBook(bookCaptor.capture());	
 		assertThat(bookCaptor.getValue())
 							 .usingRecursiveComparison()
@@ -159,17 +159,18 @@ class BookControllerTest {
 	void updateBook() throws Exception {
 		
 		BookDTO bookDto = createValidBook();
+		UUID bookId = bookDto.getId();
 		
 		given(bookService.updateBookById(any(UUID.class), any(BookDTO.class))).willReturn(Optional.of(bookDto));
 		
-		mockMvc.perform(put(BookController.BOOK_PATH_ID, bookDto.getId())
+		mockMvc.perform(put(BookController.BOOK_PATH_ID, bookId)
 			   .accept(MediaType.APPLICATION_JSON)
 			   .contentType(MediaType.APPLICATION_JSON)
 			   .content(objectMapper.writeValueAsString(bookDto)))
 			   .andExpect(status().isNoContent());
 		
-		// Verify the book is updated correctly by the controller before being transmitted to the service layer
-		verify(bookService).updateBookById(eq(bookDto.getId()), bookCaptor.capture());	
+		// Verify the controller correctly mapped and passed the updated book data to the service layer
+		verify(bookService).updateBookById(eq(bookId), bookCaptor.capture());	
 		assertThat(bookCaptor.getValue())
 		 					 .usingRecursiveComparison()
 		 					 .ignoringFields("createdDate", "updateDate")
@@ -183,10 +184,12 @@ class BookControllerTest {
 	void updateBookWithBlankFields() throws Exception {
 		
 		BookDTO bookDto = createValidBook();		
+		UUID bookId = bookDto.getId();
+		
 		bookDto.setTitle("");
 		bookDto.setAuthor("");
 		
-	    mockMvc.perform(put(BookController.BOOK_PATH_ID, bookDto.getId())
+	    mockMvc.perform(put(BookController.BOOK_PATH_ID, bookId)
 			   .accept(MediaType.APPLICATION_JSON)
 			   .contentType(MediaType.APPLICATION_JSON)
 			   .content(objectMapper.writeValueAsString(bookDto)))
@@ -201,18 +204,21 @@ class BookControllerTest {
 	void patchBook() throws Exception {
 		
 		BookDTO originalBook = createValidBook();
+		UUID originalBookId = originalBook.getId();
 		
-		Map<String,String> patch = Map.of("title", "New Title");
+		given(bookService.patchBookById(any(UUID.class), any(BookDTO.class))).willReturn(Optional.of(originalBook));
 		
-		mockMvc.perform(patch(BookController.BOOK_PATH_ID, originalBook.getId())
+		Map<String,String> patchedBook = Map.of("title", "New Title");
+		
+		mockMvc.perform(patch(BookController.BOOK_PATH_ID, originalBookId)
 			   .accept(MediaType.APPLICATION_JSON)
 			   .contentType(MediaType.APPLICATION_JSON)
-			   .content(objectMapper.writeValueAsString(patch)))
+			   .content(objectMapper.writeValueAsString(patchedBook)))
 			   .andExpect(status().isNoContent());
 		
-		// Verify that target fields are partially updated correctly by the controller before being transmitted to the service layer
+		// Verify the controller correctly mapped and passed the patched book data to the service layer
 		verify(bookService).patchBookById(eq(originalBook.getId()), bookCaptor.capture());		
-		assertThat(patch.get("title")).isEqualTo(bookCaptor.getValue());
+		assertThat(patchedBook.get("title")).isEqualTo(bookCaptor.getValue().getTitle());
 	}
 	
 	/**
@@ -222,10 +228,11 @@ class BookControllerTest {
 	void deleteBook() throws Exception {
 		
 		BookDTO bookDto = createValidBook();
+		UUID bookId = bookDto.getId();
 		
 		given(bookService.deleteBookById(any(UUID.class))).willReturn(true);
 		
-		mockMvc.perform(delete(BookController.BOOK_PATH_ID, bookDto.getId())
+		mockMvc.perform(delete(BookController.BOOK_PATH_ID, bookId)
 			   .accept(MediaType.APPLICATION_JSON))
 			   .andExpect(status().isNoContent());	
 	}

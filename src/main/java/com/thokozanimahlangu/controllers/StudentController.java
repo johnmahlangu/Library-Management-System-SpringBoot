@@ -65,7 +65,7 @@ public class StudentController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Location", STUDENT_PATH + "/" + newStudent.getId());
 		
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(headers, HttpStatus.CREATED);
 	}
 	
 	/**
