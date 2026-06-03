@@ -36,7 +36,7 @@ public class BootStrapData implements CommandLineRunner{
 		loadStudentData();		
 	}
 	/**
-	 * Checks if the student table is empty and populates it with initial sample students.
+	 * Checks if the book table is empty and populates it with initial sample students.
 	 */
 	private void loadBookData() {
 		
@@ -75,7 +75,7 @@ public class BootStrapData implements CommandLineRunner{
 		}
 	}
 	/**
-	 * Checks if the book table is empty and populates it with initial sample books.
+	 * Checks if the student table is empty and populates it with initial sample books.
 	 */
 	private void loadStudentData() {
 		
