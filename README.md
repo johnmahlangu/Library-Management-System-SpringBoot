@@ -43,7 +43,7 @@ src/
 └── test/
     └── java/com/thokozanimahlangu/
         ├── bootstrap/          # BootStrapDataTest
-        └── controllers/        # BookControllerTest (MockMvc)
+        └── controllers/        # ControllerTests (Book, Student) + Integration Tests(Book, Student)
 ```
 
 \---
