@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Data Transfer Object (DTO) used to return the details of an issued book record.
- * This class flattens data from the IssueBook entity and its related Student and Book entities into a single, clean payload for the client/frontend.
+ * This class flattens data from the IssueBook entity and its related Student and Book entities into a single payload for the client/frontend.
  */
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,6 +32,8 @@ public class IssueBookResponseDTO {
 	private String lastName;
 	
 	private LocalDate issueDate;
+	
+	private IssueStatus status;
 	
 	private LocalDate dueDate;
 	
