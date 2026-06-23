@@ -27,5 +27,6 @@ public interface IssueBookMapper {
 	@Mapping(target = "lastName", source = "student.lastName")
 	@Mapping(target = "bookId", source = "book.id")
 	@Mapping(target = "bookTitle", source = "book.title")
+	@Mapping(target = "email", source = "student.email")
 	IssueBookResponseDTO issueBookToIssueBookResponseDTO(IssueBook issueBook);
 }

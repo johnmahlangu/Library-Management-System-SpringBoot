@@ -25,11 +25,13 @@ public class IssueBookResponseDTO {
 	
 	private UUID bookId;
 	
-	private String bookTitle;
-	
 	private String firstName;
 	
 	private String lastName;
+	
+	private String email;
+	
+	private String bookTitle;
 	
 	private LocalDate issueDate;
 	
