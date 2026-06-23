@@ -32,8 +32,8 @@ src/
 │   │   ├── bootstrap/          # BootStrapData – seeds the DB on startup
 │   │   ├── controllers/        # REST controllers (Book, Student) + NotFoundException
 │   │   ├── entities/           # JPA entities: Book, Student, IssueBook
-│   │   ├── models/             # DTOs: BookDTO, StudentDTO
-│   │   ├── mappers/            # MapStruct interfaces: BookMapper, StudentMapper
+│   │   ├── models/             # DTOs: BookDTO, StudentDTO, IssueBookRequestDTO, IssueBookResponseDTO
+│   │   ├── mappers/            # MapStruct interfaces: BookMapper, StudentMapper, IssueBookMapper
 │   │   ├── repositories/       # Spring Data repositories + JPA Specifications
 │   │   └── services/           # Service interfaces + JPA implementations
 │   └── resources/
