@@ -75,13 +75,13 @@ src/
 
 ### IssueBook
 
-Tracks which student has borrowed which book, along with issue date, due date, and return date. References `Book` and `Student` via foreign keys.
+Tracks which student has borrowed which book, along with issue date, due date, status and return date. References `Book` and `Student` via foreign keys.
 
 \---
 
 ## REST API
 
-### Books — `/api/v1/book`
+### Books - `/api/v1/book`
 
 |Method|Endpoint|Description|Response|
 |-|-|-|-|
@@ -94,7 +94,7 @@ Tracks which student has borrowed which book, along with issue date, due date, a
 
 **Query parameters for `GET /api/book`:** `title`, `author`, `isbn`, `publicationYear`
 
-### Students — `/api/v1/student`
+### Students - `/api/v1/student`
 
 |Method|Endpoint|Description|Response|
 |-|-|-|-|
@@ -106,6 +106,13 @@ Tracks which student has borrowed which book, along with issue date, due date, a
 
 **Query parameters for `GET /api/student`:** `firstName`, `lastName`, `email`
 
+### IssuedBooks - `/api/v1/issues`
+
+|Method|Endpoint|Description|Response|
+|-|-|-|-|
+|`GET`|`/api/v1/issues`|List all issued books|`200 OK`|
+|`GET`|`/api/v1/issues/{issuedId}`|Get a single issued book by UUID|`200 OK` / `404`|
+|`POST`|`/api/v1/issues`|Create a new issue book record|`201 Created`|
 \---
 
 ## Database Setup
