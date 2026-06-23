@@ -189,7 +189,7 @@ Current test coverage includes:
 * \[x] MapStruct mappers (Book, Student)
 * \[x] Bootstrap seed data
 * \[ ] **Unit tests** *(in progress)*
-* \[ ] **MapStruct mapping** *(up next)*
+* \[x] MapStruct mapping
 * \[ ] **Thymeleaf front-end** (HTML \& CSS) *(planned)*
 
 \---
