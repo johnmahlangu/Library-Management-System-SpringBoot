@@ -37,5 +37,7 @@ public class IssueBookResponseDTO {
 	
 	private LocalDate dueDate;
 	
+	private LocalDate returnDate;
+	
 	private LocalDateTime updateDate;
 }
