@@ -32,8 +32,8 @@ src/
 │   │   ├── bootstrap/          # BootStrapData – seeds the DB on startup
 │   │   ├── controllers/        # REST controllers (Book, Student) + NotFoundException
 │   │   ├── entities/           # JPA entities: Book, Student, IssueBook
-│   │   ├── models/             # DTOs: BookDTO, StudentDTO
-│   │   ├── mappers/            # MapStruct interfaces: BookMapper, StudentMapper
+│   │   ├── models/             # DTOs: BookDTO, StudentDTO, IssueBookRequestDTO, IssueBookResponseDTO
+│   │   ├── mappers/            # MapStruct interfaces: BookMapper, StudentMapper, IssueBookMapper
 │   │   ├── repositories/       # Spring Data repositories + JPA Specifications
 │   │   └── services/           # Service interfaces + JPA implementations
 │   └── resources/
@@ -75,13 +75,13 @@ src/
 
 ### IssueBook
 
-Tracks which student has borrowed which book, along with issue date, due date, and return date. References `Book` and `Student` via foreign keys.
+Tracks which student has borrowed which book, along with issue date, due date, status and return date. References `Book` and `Student` via foreign keys.
 
 \---
 
 ## REST API
 
-### Books — `/api/v1/book`
+### Books - `/api/v1/book`
 
 |Method|Endpoint|Description|Response|
 |-|-|-|-|
@@ -94,7 +94,7 @@ Tracks which student has borrowed which book, along with issue date, due date, a
 
 **Query parameters for `GET /api/book`:** `title`, `author`, `isbn`, `publicationYear`
 
-### Students — `/api/v1/student`
+### Students - `/api/v1/student`
 
 |Method|Endpoint|Description|Response|
 |-|-|-|-|
@@ -106,6 +106,13 @@ Tracks which student has borrowed which book, along with issue date, due date, a
 
 **Query parameters for `GET /api/student`:** `firstName`, `lastName`, `email`
 
+### IssuedBooks - `/api/v1/issues`
+
+|Method|Endpoint|Description|Response|
+|-|-|-|-|
+|`GET`|`/api/v1/issues`|List all issued books|`200 OK`|
+|`GET`|`/api/v1/issues/{issuedId}`|Get a single issued book by UUID|`200 OK` / `404`|
+|`POST`|`/api/v1/issues`|Create a new issue book record|`201 Created`|
 \---
 
 ## Database Setup
@@ -182,7 +189,7 @@ Current test coverage includes:
 * \[x] MapStruct mappers (Book, Student)
 * \[x] Bootstrap seed data
 * \[ ] **Unit tests** *(in progress)*
-* \[ ] **MapStruct mapping** *(up next)*
+* \[x] MapStruct mapping
 * \[ ] **Thymeleaf front-end** (HTML \& CSS) *(planned)*
 
 \---
