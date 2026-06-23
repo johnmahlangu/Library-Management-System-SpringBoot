@@ -1,6 +1,8 @@
 package com.thokozanimahlangu.entities;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,10 +11,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -32,6 +37,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "Student")
 public class Student {
 
 	@Id
@@ -63,5 +69,28 @@ public class Student {
 	@UpdateTimestamp
 	@Column(name = "update_date")
 	private LocalDateTime updateDate;
+
+	@Builder.Default
+	@OneToMany(mappedBy = "student", 
+			   cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+			   orphanRemoval = true)
+	private Set<IssueBook> issuedBooksToStudent = new HashSet<>();
 	
+	public void addStudentIssuedBook(IssueBook issuedBook) {		
+		issuedBooksToStudent.add(issuedBook);
+		issuedBook.setStudent(this);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+	    if (this == o) return true;
+	    if (!(o instanceof Student)) return false;
+	    Student student = (Student) o;
+	    return id != null && id.equals(student.id);
+	}
+
+	@Override
+	public int hashCode() {
+	    return getClass().hashCode();
+	}
 }
