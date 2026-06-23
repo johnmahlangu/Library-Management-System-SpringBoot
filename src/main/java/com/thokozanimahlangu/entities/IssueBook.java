@@ -10,10 +10,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.type.SqlTypes;
 
+import com.thokozanimahlangu.models.IssueStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +38,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
+@Table(name = "IssueBook")
 public class IssueBook {
 
 	@Id
@@ -54,4 +62,15 @@ public class IssueBook {
 	@Column(name = "due_date")
 	private LocalDate dueDate;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "status")
+	private IssueStatus status;
+	
+	@ManyToOne
+	@JoinColumn(name = "student_id")
+	private Student student;
+	
+	@ManyToOne
+	@JoinColumn(name = "book_id")
+	private Book book;
 }
