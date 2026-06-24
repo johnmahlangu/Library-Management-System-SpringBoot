@@ -55,7 +55,7 @@ public class IssueBookController {
 	@PatchMapping(RETURN_PATH)
 	public ResponseEntity<?> returnBook(@PathVariable("issueId") UUID issueId) {
 		
-		issueBookService.returnBook(issueId).orElseThrow(NotFoundException::new);
+		issueBookService.returnBook(issueId);
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
