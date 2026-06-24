@@ -34,6 +34,9 @@ public class BookDTO {
 	@NotBlank
 	private String isbn;
 	
+	@Builder.Default
+	private boolean available = true;
+	
 	private LocalDateTime createdDate;
 	
 	private LocalDateTime updateDate;
