@@ -8,10 +8,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.thokozanimahlangu.controllers.NotFoundException;
 import com.thokozanimahlangu.entities.Book;
 import com.thokozanimahlangu.entities.IssueBook;
 import com.thokozanimahlangu.entities.Student;
+import com.thokozanimahlangu.exceptions.BookAlreadyIssuedException;
+import com.thokozanimahlangu.exceptions.NotFoundException;
 import com.thokozanimahlangu.mappers.IssueBookMapper;
 import com.thokozanimahlangu.models.IssueBookRequestDTO;
 import com.thokozanimahlangu.models.IssueBookResponseDTO;
@@ -32,10 +33,17 @@ public class IssueBookServiceJPA implements IssueBookService{
 	private final IssueBookMapper issueBookMapper;
 		
 	public IssueBookResponseDTO saveIssueBook(IssueBookRequestDTO request) {
-			
+		
+		issueBookRepository.findByBookIdAndReturnDateIsNull(request.getBookId())
+						   .ifPresent(issue -> { 
+							   throw new BookAlreadyIssuedException();
+						   });
+						   
 		Student student = studentRepository.findById(request.getStudentId()).orElseThrow(NotFoundException::new);
 			
 		Book book = bookRepository.findById(request.getBookId()).orElseThrow(NotFoundException::new);
+		
+		book.setAvailable(false);
 		
 		IssueBook issueBook = IssueBook.builder()
 									   .student(student)
@@ -53,6 +61,9 @@ public class IssueBookServiceJPA implements IssueBookService{
 	public Optional<IssueBookResponseDTO> returnBook(UUID issueBookId) {
 		
 		IssueBook issueBook = issueBookRepository.findById(issueBookId).orElseThrow(NotFoundException::new);
+		
+		Book book = issueBook.getBook();
+		book.setAvailable(true);
 		
 		issueBook.setStatus(IssueStatus.RETURNED);
 		issueBook.setReturnDate(LocalDate.now());
