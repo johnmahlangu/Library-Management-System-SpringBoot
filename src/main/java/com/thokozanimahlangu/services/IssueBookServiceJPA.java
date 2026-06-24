@@ -73,4 +73,40 @@ public class IssueBookServiceJPA implements IssueBookService{
 		return issueBookRepository.findById(issueId)
 								  .map(issuedBook -> issueBookMapper.issueBookToIssueBookResponseDTO(issuedBook));
 	}
+	
+	public List<IssueBookResponseDTO> listActiveIssues() {
+		
+		return issueBookRepository.findByReturnDateIsNull()
+				                  .stream()
+				                  .map(activeIssue -> issueBookMapper.issueBookToIssueBookResponseDTO(activeIssue))
+				                  .collect(Collectors.toList());
+	}
+	
+	public List<IssueBookResponseDTO> listReturnedBooks() {
+		
+		return issueBookRepository.findByReturnDateIsNull()
+								  .stream()
+								  .map(returnedBook -> issueBookMapper.issueBookToIssueBookResponseDTO(returnedBook))
+								  .collect(Collectors.toList());
+	}
+	
+	public List<IssueBookResponseDTO> getStudentIssues(UUID studentId) {
+		
+		studentRepository.findById(studentId).orElseThrow(NotFoundException::new);
+		
+		return issueBookRepository.findByStudentId(studentId)
+								  .stream()
+								  .map(studentIssue -> issueBookMapper.issueBookToIssueBookResponseDTO(studentIssue))
+								  .collect(Collectors.toList());
+	}
+	
+	public List<IssueBookResponseDTO> getStudentActiveIssues(UUID studentId) {
+		
+		studentRepository.findById(studentId).orElseThrow(NotFoundException::new);
+		
+		return issueBookRepository.findByStudentIdAndReturnDateIsNull(studentId)
+								  .stream()
+								  .map(studentActiveIssue -> issueBookMapper.issueBookToIssueBookResponseDTO(studentActiveIssue))
+								  .collect(Collectors.toList());		
+	}
 }

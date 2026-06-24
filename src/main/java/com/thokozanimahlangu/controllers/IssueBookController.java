@@ -30,6 +30,14 @@ public class IssueBookController {
 	
 	public static final String RETURN_PATH = ISSUE_PATH + "/{issueId}/return";
 	
+	public static final String ACTIVE_ISSUE_PATH = ISSUE_PATH + "/active";
+	
+	public static final String RETURNED_BOOKS_PATH = ISSUE_PATH + "/returned";
+	
+	public static final String STUDENT_ISSUES_PATH = StudentController.STUDENT_PATH + "/{studentId}/issues";
+	
+	public static final String ACTIVE_STUDENT_ISSUES_PATH = STUDENT_ISSUES_PATH + "/active";
+	
 	private final IssueBookService issueBookService;
 	
 	@PostMapping(ISSUE_PATH)
@@ -63,4 +71,27 @@ public class IssueBookController {
 		return issueBookService.getIssueBookById(issueId).orElseThrow(NotFoundException::new);
 	}
 	
+	@GetMapping(ACTIVE_ISSUE_PATH)
+	public List<IssueBookResponseDTO> listActiveIssues() {
+		
+		return issueBookService.listActiveIssues();
+	}
+	
+	@GetMapping(RETURNED_BOOKS_PATH)
+	public List<IssueBookResponseDTO> listReturnedBooks() {
+		
+		return issueBookService.listReturnedBooks();
+	}
+	
+	@GetMapping(STUDENT_ISSUES_PATH)
+	public List<IssueBookResponseDTO> getStudentIssues(@PathVariable("studentId") UUID studentId) {
+		
+		return issueBookService.getStudentIssues(studentId);
+	}
+	
+	@GetMapping(ACTIVE_STUDENT_ISSUES_PATH)
+	public List<IssueBookResponseDTO> getActiveStudentIssues(@PathVariable("studentId") UUID studentId) {
+		
+		return issueBookService.getStudentActiveIssues(studentId);
+	}	
 }
