@@ -1,4 +1,4 @@
-package com.thokozanimahlangu.controllers;
+package com.thokozanimahlangu.exceptions;
 
 import java.util.HashMap;
 import java.util.List;

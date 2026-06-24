@@ -67,6 +67,10 @@ public class Book {
 	@Column(name = "isbn")
 	private String isbn;
 	
+	@Builder.Default
+	@Column(name = "available")
+	private boolean available = true;
+	
 	@CreationTimestamp
 	@Column(name = "created_date", updatable = false)
 	private LocalDateTime createdDate;

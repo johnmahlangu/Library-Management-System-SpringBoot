@@ -11,9 +11,17 @@ public interface IssueBookService {
 
 	IssueBookResponseDTO saveIssueBook(IssueBookRequestDTO request);
 	
-	Optional<IssueBookResponseDTO> returnBook(UUID issueBookId);
+	IssueBookResponseDTO returnBook(UUID issueBookId);
 	
 	List<IssueBookResponseDTO> listIssuedBooks();
 	
 	Optional<IssueBookResponseDTO> getIssueBookById(UUID issueId);
+	
+	List<IssueBookResponseDTO> listActiveIssues();
+	
+	List<IssueBookResponseDTO> listReturnedBooks();
+	
+	List<IssueBookResponseDTO> getStudentIssues(UUID studentId);
+	
+	List<IssueBookResponseDTO> getStudentActiveIssues(UUID studentId);
 }

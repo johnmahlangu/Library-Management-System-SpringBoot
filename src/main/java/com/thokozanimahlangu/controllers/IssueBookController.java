@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.thokozanimahlangu.exceptions.NotFoundException;
 import com.thokozanimahlangu.models.IssueBookRequestDTO;
 import com.thokozanimahlangu.models.IssueBookResponseDTO;
 import com.thokozanimahlangu.services.IssueBookService;
@@ -29,6 +30,14 @@ public class IssueBookController {
 	public static final String ISSUE_PATH_ID = ISSUE_PATH + "/{issueId}";
 	
 	public static final String RETURN_PATH = ISSUE_PATH + "/{issueId}/return";
+	
+	public static final String ACTIVE_ISSUE_PATH = ISSUE_PATH + "/active";
+	
+	public static final String RETURNED_BOOKS_PATH = ISSUE_PATH + "/returned";
+	
+	public static final String STUDENT_ISSUES_PATH = StudentController.STUDENT_PATH + "/{studentId}/issues";
+	
+	public static final String ACTIVE_STUDENT_ISSUES_PATH = STUDENT_ISSUES_PATH + "/active";
 	
 	private final IssueBookService issueBookService;
 	
@@ -46,7 +55,7 @@ public class IssueBookController {
 	@PatchMapping(RETURN_PATH)
 	public ResponseEntity<?> returnBook(@PathVariable("issueId") UUID issueId) {
 		
-		issueBookService.returnBook(issueId).orElseThrow(NotFoundException::new);
+		issueBookService.returnBook(issueId);
 		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
@@ -63,4 +72,27 @@ public class IssueBookController {
 		return issueBookService.getIssueBookById(issueId).orElseThrow(NotFoundException::new);
 	}
 	
+	@GetMapping(ACTIVE_ISSUE_PATH)
+	public List<IssueBookResponseDTO> listActiveIssues() {
+		
+		return issueBookService.listActiveIssues();
+	}
+	
+	@GetMapping(RETURNED_BOOKS_PATH)
+	public List<IssueBookResponseDTO> listReturnedBooks() {
+		
+		return issueBookService.listReturnedBooks();
+	}
+	
+	@GetMapping(STUDENT_ISSUES_PATH)
+	public List<IssueBookResponseDTO> getStudentIssues(@PathVariable("studentId") UUID studentId) {
+		
+		return issueBookService.getStudentIssues(studentId);
+	}
+	
+	@GetMapping(ACTIVE_STUDENT_ISSUES_PATH)
+	public List<IssueBookResponseDTO> getActiveStudentIssues(@PathVariable("studentId") UUID studentId) {
+		
+		return issueBookService.getStudentActiveIssues(studentId);
+	}	
 }

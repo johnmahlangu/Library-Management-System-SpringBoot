@@ -1,4 +1,4 @@
-package com.thokozanimahlangu.controllers;
+package com.thokozanimahlangu.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
