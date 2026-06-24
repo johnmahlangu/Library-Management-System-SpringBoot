@@ -58,7 +58,7 @@ public class IssueBookServiceJPA implements IssueBookService{
 		return issueBookMapper.issueBookToIssueBookResponseDTO(issueBookRepository.save(issueBook));
 	}
 	
-	public Optional<IssueBookResponseDTO> returnBook(UUID issueBookId) {
+	public IssueBookResponseDTO returnBook(UUID issueBookId) {
 		
 		IssueBook issueBook = issueBookRepository.findById(issueBookId).orElseThrow(NotFoundException::new);
 		
@@ -68,7 +68,7 @@ public class IssueBookServiceJPA implements IssueBookService{
 		issueBook.setStatus(IssueStatus.RETURNED);
 		issueBook.setReturnDate(LocalDate.now());
 		
-		return Optional.of(issueBookMapper.issueBookToIssueBookResponseDTO(issueBookRepository.save(issueBook)));
+		return issueBookMapper.issueBookToIssueBookResponseDTO(issueBookRepository.save(issueBook));
 	}
 	
 	public List<IssueBookResponseDTO> listIssuedBooks() {

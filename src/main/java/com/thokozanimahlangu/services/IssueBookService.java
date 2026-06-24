@@ -11,7 +11,7 @@ public interface IssueBookService {
 
 	IssueBookResponseDTO saveIssueBook(IssueBookRequestDTO request);
 	
-	Optional<IssueBookResponseDTO> returnBook(UUID issueBookId);
+	IssueBookResponseDTO returnBook(UUID issueBookId);
 	
 	List<IssueBookResponseDTO> listIssuedBooks();
 	
