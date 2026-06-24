@@ -21,6 +21,7 @@ import com.thokozanimahlangu.repositories.BookRepository;
 import com.thokozanimahlangu.repositories.IssueBookRepository;
 import com.thokozanimahlangu.repositories.StudentRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -32,6 +33,7 @@ public class IssueBookServiceJPA implements IssueBookService{
 	private final BookRepository bookRepository;
 	private final IssueBookMapper issueBookMapper;
 		
+	@Transactional
 	public IssueBookResponseDTO saveIssueBook(IssueBookRequestDTO request) {
 		
 		issueBookRepository.findByBookIdAndReturnDateIsNull(request.getBookId())
@@ -57,7 +59,7 @@ public class IssueBookServiceJPA implements IssueBookService{
 			
 		return issueBookMapper.issueBookToIssueBookResponseDTO(issueBookRepository.save(issueBook));
 	}
-	
+	@Transactional
 	public IssueBookResponseDTO returnBook(UUID issueBookId) {
 		
 		IssueBook issueBook = issueBookRepository.findById(issueBookId).orElseThrow(NotFoundException::new);
