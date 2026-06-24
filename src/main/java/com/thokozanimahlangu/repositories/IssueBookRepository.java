@@ -1,6 +1,7 @@
 package com.thokozanimahlangu.repositories;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,6 @@ public interface IssueBookRepository extends JpaRepository<IssueBook,UUID>{
 	List<IssueBook> findByStudentId(UUID studentId);
 	
 	List<IssueBook> findByStudentIdAndReturnDateIsNull(UUID studentId);
+	
+	Optional<IssueBook> findByBookIdAndReturnDateIsNull(UUID bookId);
 }
