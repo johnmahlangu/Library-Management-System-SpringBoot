@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.thokozanimahlangu.exceptions.NotFoundException;
 import com.thokozanimahlangu.models.IssueBookRequestDTO;
 import com.thokozanimahlangu.models.IssueBookResponseDTO;
 import com.thokozanimahlangu.services.IssueBookService;
