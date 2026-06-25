@@ -38,7 +38,7 @@ public class IssueBookServiceJPA implements IssueBookService{
 	public IssueBookResponseDTO saveIssueBook(IssueBookRequestDTO request) {
 		
 		issueBookRepository.findByBookIdAndReturnDateIsNull(request.getBookId())
-						   .ifPresent(issue -> { 
+						   .ifPresent(_ -> { 
 							   throw new BookAlreadyIssuedException();
 						   });
 						   
