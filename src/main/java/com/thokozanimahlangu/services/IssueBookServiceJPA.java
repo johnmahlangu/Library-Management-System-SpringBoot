@@ -12,6 +12,7 @@ import com.thokozanimahlangu.entities.Book;
 import com.thokozanimahlangu.entities.IssueBook;
 import com.thokozanimahlangu.entities.Student;
 import com.thokozanimahlangu.exceptions.BookAlreadyIssuedException;
+import com.thokozanimahlangu.exceptions.BookAlreadyReturnedException;
 import com.thokozanimahlangu.exceptions.NotFoundException;
 import com.thokozanimahlangu.mappers.IssueBookMapper;
 import com.thokozanimahlangu.models.IssueBookRequestDTO;
@@ -54,6 +55,9 @@ public class IssueBookServiceJPA implements IssueBookService{
 									   .dueDate(request.getDueDate())
 									   .build();
 		
+		if (issueBook.getStatus() == IssueStatus.RETURNED) {
+			throw new BookAlreadyReturnedException();
+		}
 		student.addStudentIssuedBook(issueBook);
 		book.addIssuedBook(issueBook);
 			
