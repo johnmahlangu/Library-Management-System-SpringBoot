@@ -27,13 +27,34 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+
+/**
+ * Service implementation responsible for business logic
+ * related to issuing and returning books.
+ *
+ * Handles:
+ * - Validating book availability
+ * - Creating issue records
+ * - Updating return records
+ * - Fetching issue history
+ */
 public class IssueBookServiceJPA implements IssueBookService{
 
 	private final IssueBookRepository issueBookRepository;
 	private final StudentRepository studentRepository;
 	private final BookRepository bookRepository;
 	private final IssueBookMapper issueBookMapper;
-		
+	
+	/**
+	 * Creates a new issue record for a student borrowing a book.
+	 * 
+	 * Updates book availability and marks the issue as issued.
+	 * 
+	 * @param request issue request data
+	 * @return saved issue record
+	 * @throws BookAlreadyIssuedException if book is already issued
+	 * @throws NotFoundException if student or book is not found
+	 */
 	@Transactional
 	public IssueBookResponseDTO saveIssueBook(IssueBookRequestDTO request) {
 		
@@ -63,6 +84,16 @@ public class IssueBookServiceJPA implements IssueBookService{
 			
 		return issueBookMapper.issueBookToIssueBookResponseDTO(issueBookRepository.save(issueBook));
 	}
+	
+	/**
+	 * Processes a book return.
+	 *
+	 * Updates book availability and marks the issue as returned.
+	 * 
+	 * @param issueBookId issue transaction ID
+	 * @return updated issue record
+	 * @throws NotFoundException if issue record does not exist
+	 */
 	@Transactional
 	public IssueBookResponseDTO returnBook(UUID issueBookId) {
 		
@@ -77,6 +108,11 @@ public class IssueBookServiceJPA implements IssueBookService{
 		return issueBookMapper.issueBookToIssueBookResponseDTO(issueBookRepository.save(issueBook));
 	}
 	
+	/**
+	 * Retrieves all issue records.
+	 *
+	 * @return list of all issued books
+	 */
 	public List<IssueBookResponseDTO> listIssuedBooks() {
 		
 		return issueBookRepository.findAll()
@@ -91,6 +127,11 @@ public class IssueBookServiceJPA implements IssueBookService{
 								  .map(issuedBook -> issueBookMapper.issueBookToIssueBookResponseDTO(issuedBook));
 	}
 	
+	/**
+	 * Retrieves only active (not returned) issue records.
+	 *
+	 * @return list of active issues
+	 */
 	public List<IssueBookResponseDTO> listActiveIssues() {
 		
 		return issueBookRepository.findByReturnDateIsNull()
@@ -99,6 +140,11 @@ public class IssueBookServiceJPA implements IssueBookService{
 				                  .collect(Collectors.toList());
 	}
 	
+	/**
+	 * Retrieves all returned book records.
+	 *
+	 * @return list of returned books
+	 */
 	public List<IssueBookResponseDTO> listReturnedBooks() {
 		
 		return issueBookRepository.findByReturnDateIsNull()
@@ -107,6 +153,13 @@ public class IssueBookServiceJPA implements IssueBookService{
 								  .collect(Collectors.toList());
 	}
 	
+	/**
+	 * Retrieves all books borrowed to the student(current and past issues).
+	 * 
+	 * @param student ID
+	 * @throws NotFoundException if student does not exist
+	 * @return list of books borrowed to the student(current and past issues)
+	 */
 	public List<IssueBookResponseDTO> getStudentIssues(UUID studentId) {
 		
 		studentRepository.findById(studentId).orElseThrow(NotFoundException::new);
@@ -117,6 +170,13 @@ public class IssueBookServiceJPA implements IssueBookService{
 								  .collect(Collectors.toList());
 	}
 	
+	/**
+	 * Retrieves all books currently borrowed to the student.
+	 * 
+	 * @param student ID
+	 * @throws NotFoundException if student is not found
+	 * @return list of books currently borrowed to the student
+	 */
 	public List<IssueBookResponseDTO> getStudentActiveIssues(UUID studentId) {
 		
 		studentRepository.findById(studentId).orElseThrow(NotFoundException::new);

@@ -30,6 +30,16 @@ import lombok.Setter;
 /**
  * Persistence Entity representing a Book in the database.
  * Maps the business object to the 'book' table.
+ * 
+ * Stores information about:
+ * - Book ID
+ * - Book author
+ * - Book title
+ * - Book publication year
+ * - Book ISBN
+ * - Created date
+ * - Update date
+ * - Book availability (true or false)
  */
 
 @Entity
