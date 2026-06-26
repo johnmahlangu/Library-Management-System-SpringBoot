@@ -7,7 +7,7 @@ CREATE TABLE Book (
     isbn				varchar(13)				default null,
     created_date		datetime(6)				default null,
     update_date			datetime(6)				default null,
-
+    available           boolean                 default true,
     publication_year	smallint				default null
 )engine = InnoDB;
 
