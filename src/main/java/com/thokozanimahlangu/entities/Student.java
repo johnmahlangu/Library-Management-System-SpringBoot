@@ -29,6 +29,14 @@ import lombok.Setter;
 /**
  * Persistence Entity representing a Student in the database.
  * Maps the business object to the 'student' table.
+ * 
+ * Stores information about:
+ * - Student ID
+ * - Student's first name
+ * - Student's last name
+ * - Student's email
+ * - Created date
+ * - Update date
  */
 
 @Entity

@@ -30,6 +30,14 @@ import lombok.Setter;
 /**
  * Persistence Entity representing a IssueBook in the database.
  * Maps the business object to the 'IssueBook' table.
+ * 
+ *  Stores information about:
+ * - Which student borrowed the book
+ * - Which book was borrowed
+ * - Issue date
+ * - Due date
+ * - Return date
+ * - Current issue status
  */
 
 @Entity

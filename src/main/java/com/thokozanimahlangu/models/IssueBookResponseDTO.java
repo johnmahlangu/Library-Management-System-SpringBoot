@@ -19,27 +19,23 @@ import lombok.NoArgsConstructor;
 @Data
 public class IssueBookResponseDTO {
 
+	// Unique issue transaction ID
 	private UUID id;
 	
+	// Student information
 	private UUID studentId;
-	
-	private UUID bookId;
-	
 	private String firstName;
-	
-	private String lastName;
-	
+	private String lastName;	
 	private String email;
 	
+	// Book information
+	private UUID bookId;
 	private String bookTitle;
 	
+	// Issue transaction details
 	private LocalDate issueDate;
-	
-	private IssueStatus status;
-	
-	private LocalDate dueDate;
-	
-	private LocalDate returnDate;
-	
-	private LocalDateTime updateDate;
+	private IssueStatus status;	
+	private LocalDate dueDate;	
+	private LocalDate returnDate;	
+	private LocalDateTime updateDate;	
 }

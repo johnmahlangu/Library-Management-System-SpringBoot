@@ -19,10 +19,13 @@ import lombok.NoArgsConstructor;
 @Data
 public class IssueBookRequestDTO {
 	
+	// ID of the student borrowing the book
 	private UUID studentId;
 	
+	// ID of the book being issued
 	private UUID bookId;
 	
+	// Due date for returning the book
 	@NotNull
 	private LocalDate dueDate;
 }
