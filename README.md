@@ -30,11 +30,12 @@ src/
 ├── main/
 │   ├── java/com/thokozanimahlangu/
 │   │   ├── bootstrap/          # BootStrapData – seeds the DB on startup
-│   │   ├── controllers/        # REST controllers (Book, Student) + NotFoundException
+│   │   ├── controllers/        # REST controllers (Book, Student)
 │   │   ├── entities/           # JPA entities: Book, Student, IssueBook
 │   │   ├── models/             # DTOs: BookDTO, StudentDTO, IssueBookRequestDTO, IssueBookResponseDTO
 │   │   ├── mappers/            # MapStruct interfaces: BookMapper, StudentMapper, IssueBookMapper
 │   │   ├── repositories/       # Spring Data repositories + JPA Specifications
+|   |   ├── exceptions/         # NotFoundException, BookAlreadyIssuedException, BookAlreadyReturnedException, CustomErrorController
 │   │   └── services/           # Service interfaces + JPA implementations
 │   └── resources/
 │       ├── application.properties
