@@ -186,8 +186,8 @@ Current test coverage includes:
 * \[x] JPA entities (Book, Student, IssueBook)
 * \[x] Repository layer with JPA Specifications for dynamic filtering
 * \[x] Service layer (interface + JPA implementation)
-* \[x] REST controllers (Book, Student)
-* \[x] MapStruct mappers (Book, Student)
+* \[x] REST controllers (Book, Student, IssueBook)
+* \[x] MapStruct mappers (Book, Student, IssueBook)
 * \[x] Bootstrap seed data
 * \[ ] **Unit tests** *(in progress)*
 * \[x] MapStruct mapping
