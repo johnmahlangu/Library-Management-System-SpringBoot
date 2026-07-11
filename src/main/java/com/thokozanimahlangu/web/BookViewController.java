@@ -32,6 +32,7 @@ public class BookViewController {
 	public static final String EDIT_BOOK_PATH = BOOKS_PATH + "/edit/{bookId}";
 	public static final String EDIT_BOOK_VIEW = "books/edit";
 	public static final String UPDATE_BOOK = BOOKS_PATH + "/update/{bookId}";
+	public static final String DELETE_BOOK_PATH = BOOKS_PATH + "/delete/{bookId}";
 	
 	private final BookService bookService;
 	
@@ -92,7 +93,7 @@ public class BookViewController {
 		
 		// Provide an empty DTO to the model
 		model.addAttribute("book", new BookDTO());
-		
+		// Render the create book HTML template
 		return CREATE_BOOK_VIEW;
 	}
 	
@@ -131,6 +132,7 @@ public class BookViewController {
 		BookDTO book = bookService.getBookById(bookId).orElseThrow(NotFoundException::new);
 		
 		model.addAttribute("book", book);
+		// Render the edit book HTML template
 		return EDIT_BOOK_VIEW;
 	}
 	
@@ -151,7 +153,24 @@ public class BookViewController {
 		}
 		
 		bookService.updateBookById(bookId, bookDto);
-		// Redirect to prevent duplicate submissions on page refresh
+		// Redirect to prevent duplicate updates on page refresh
+		return BOOKS_REDIRECT;
+	}
+	
+	/**
+	 * Handles POST requests to delete a specific book by its ID.
+	 *
+	 * @param bookId the unique identifier (UUID) of the book to delete
+	 * @return a redirect string to the books list page upon successful deletion
+	 * @throws NotFoundException if the book to delete does not exist
+	 */
+	@PostMapping(DELETE_BOOK_PATH)
+	public String deleteBook(@PathVariable UUID bookId) {
+		// Attempt to delete the book; if the service returns false (not found), throw a 404
+		if (!bookService.deleteBookById(bookId)) {
+			throw new NotFoundException();
+		}
+		// Redirect to prevent duplicate deletions on page refresh
 		return BOOKS_REDIRECT;
 	}
 }
