@@ -29,6 +29,9 @@ public class BookViewController {
 	public static final String BOOK_DETAILS_VIEW = "books/details";
 	public static final String CREATE_BOOK_PATH = BOOKS_PATH + "/create";
 	public static final String CREATE_BOOK_VIEW = "books/create"; 
+	public static final String EDIT_BOOK_PATH = BOOKS_PATH + "/edit/{bookId}";
+	public static final String EDIT_BOOK_VIEW = "books/edit";
+	public static final String UPDATE_BOOK = BOOKS_PATH + "/update/{bookId}";
 	
 	private final BookService bookService;
 	
@@ -61,6 +64,7 @@ public class BookViewController {
 	 *
 	 * @param bookId the unique identifier (UUID) of the book to retrieve
 	 * @param model  the Spring UI Model to pass data to the view
+	 * @throws NotFoundException if no book matches the provided UUID
 	 * @return the path to the book details view template
 	 */
 	@GetMapping(BOOK_PATH_ID)
@@ -102,12 +106,51 @@ public class BookViewController {
 	 */
 	@PostMapping(BOOKS_PATH)
 	public String saveBook(@Valid @ModelAttribute("book") BookDTO bookDto, BindingResult result) {
-		
+		// If validation constraints fail, return to the create book form
 		if(result.hasErrors()) {
 			return CREATE_BOOK_VIEW;
 		}
 		
 		bookService.saveNewBook(bookDto);
+		// Redirect to prevent duplicate submissions on page refresh
+		return BOOKS_REDIRECT;
+	}
+	
+	/**
+	 * Handles GET requests to display the "Edit Book" form populated with 
+	 * the existing book's current details.
+	 *
+	 * @param bookId the unique identifier (UUID) of the book to edit
+	 * @param model  the Spring UI Model to pass the book data to the form
+	 * @return the path to the book editing form view template
+	 * @throws NotFoundException if no book matches the provided UUID
+	 */
+	@GetMapping(EDIT_BOOK_PATH)
+	public String editBookForm(@PathVariable UUID bookId, Model model) {
+		
+		BookDTO book = bookService.getBookById(bookId).orElseThrow(NotFoundException::new);
+		
+		model.addAttribute("book", book);
+		return EDIT_BOOK_VIEW;
+	}
+	
+	/**
+	 * Handles POST requests to process and save updates to an existing book.
+	 * Validates the incoming form data before updating.
+	 *
+	 * @param bookId   the unique identifier (UUID) of the book being updated
+	 * @param bookDto  the data transfer object containing the modified book data
+	 * @param result   holds the results of the validation check
+	 * @return the edit view if validation fails, or a redirect string if successful
+	 */
+	@PostMapping(UPDATE_BOOK)
+	public String updateBook(@PathVariable UUID bookId, @Valid @ModelAttribute BookDTO bookDto, BindingResult result) {
+		// If validation constraints fail, return to the edit form
+		if(result.hasErrors()) {
+			return EDIT_BOOK_VIEW;
+		}
+		
+		bookService.updateBookById(bookId, bookDto);
 		// Redirect to prevent duplicate submissions on page refresh
 		return BOOKS_REDIRECT;
 	}
