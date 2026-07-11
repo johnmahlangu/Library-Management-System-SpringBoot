@@ -4,14 +4,18 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.thokozanimahlangu.exceptions.NotFoundException;
 import com.thokozanimahlangu.models.BookDTO;
 import com.thokozanimahlangu.services.BookService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -19,9 +23,12 @@ import lombok.RequiredArgsConstructor;
 public class BookViewController {
 
 	public static final String BOOKS_PATH = "/books";
+	public static final String BOOKS_REDIRECT = "redirect:/books";
 	public static final String BOOK_PATH_ID = BOOKS_PATH + "/{bookId}";
 	public static final String BOOKS_LIST_VIEW = "books/list"; 
 	public static final String BOOK_DETAILS_VIEW = "books/details";
+	public static final String CREATE_BOOK_PATH = BOOKS_PATH + "/create";
+	public static final String CREATE_BOOK_VIEW = "books/create"; 
 	
 	private final BookService bookService;
 	
@@ -63,9 +70,45 @@ public class BookViewController {
 		BookDTO book = bookService.getBookById(bookId)
 				   .orElseThrow(NotFoundException::new);
 		
-		// Add existing book to the UI model
+		// Add existing book to the UI model;
 		model.addAttribute("book", book);
 		// Render the book details HTML template
 		return BOOK_DETAILS_VIEW;
+	}
+	
+	/**
+	 * Handles GET requests to display the "Create New Book" form.
+	 * Initializes an empty BookDTO to bind form fields.
+	 *
+	 * @param model the Spring UI Model to pass the empty DTO to the form view
+	 * @return the path to the book creation form view template
+	 */
+	@GetMapping(CREATE_BOOK_PATH)
+	public String createBookForm(Model model) {
+		
+		// Provide an empty DTO to the model
+		model.addAttribute("book", new BookDTO());
+		
+		return CREATE_BOOK_VIEW;
+	}
+	
+	/**
+	 * Handles POST requests to process and save a new book submission.
+	 * Validates the input data before persisting it via the service layer.
+	 *
+	 * @param bookDto the data transfer object containing the submitted form data
+	 * @param result  captures any validation errors from the bound object
+	 * @return a redirect path on success, or the form view path if validation fails
+	 */
+	@PostMapping(BOOKS_PATH)
+	public String saveBook(@Valid @ModelAttribute("book") BookDTO bookDto, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			return CREATE_BOOK_VIEW;
+		}
+		
+		bookService.saveNewBook(bookDto);
+		// Redirect to prevent duplicate submissions on page refresh
+		return BOOKS_REDIRECT;
 	}
 }
