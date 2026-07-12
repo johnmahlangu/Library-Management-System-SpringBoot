@@ -55,7 +55,7 @@ public class BookViewController {
 							Model model) {
 		
 		// Fetch filtered books from the service layer and add them to the UI model
-		model.addAttribute("books", bookService.listBooks(title, author, isbn, publicationYear));		
+		model.addAttribute("listBooks", bookService.listBooks(title, author, isbn, publicationYear));		
 		// Render the book list HTML template
 		return BOOKS_LIST_VIEW;
 	}
@@ -92,13 +92,13 @@ public class BookViewController {
 	public String createBookForm(Model model) {
 		
 		// Provide an empty DTO to the model
-		model.addAttribute("book", new BookDTO());
+		model.addAttribute("createBook", new BookDTO());
 		// Render the create book HTML template
 		return CREATE_BOOK_VIEW;
 	}
 	
 	/**
-	 * Handles POST requests to process and save a new book submission.
+	 * Handles POST requests to process and save a new book submission.;
 	 * Validates the input data before persisting it via the service layer.
 	 *
 	 * @param bookDto the data transfer object containing the submitted form data
@@ -106,7 +106,7 @@ public class BookViewController {
 	 * @return a redirect path on success, or the form view path if validation fails
 	 */
 	@PostMapping(BOOKS_PATH)
-	public String saveBook(@Valid @ModelAttribute("book") BookDTO bookDto, BindingResult result) {
+	public String saveBook(@Valid @ModelAttribute BookDTO bookDto, BindingResult result) {
 		// If validation constraints fail, return to the create book form
 		if(result.hasErrors()) {
 			return CREATE_BOOK_VIEW;
@@ -131,7 +131,7 @@ public class BookViewController {
 		
 		BookDTO book = bookService.getBookById(bookId).orElseThrow(NotFoundException::new);
 		
-		model.addAttribute("book", book);
+		model.addAttribute("editBook", book);
 		// Render the edit book HTML template
 		return EDIT_BOOK_VIEW;
 	}
