@@ -28,6 +28,7 @@ public class StudentViewController {
 	public static final String EDIT_STUDENT_PATH = STUDENTS_PATH + "/edit/{studentId}";
 	public static final String EDIT_STUDENT_VIEW = "students/edit";
 	public static final String UPDATE_STUDENT_PATH = STUDENTS_PATH + "/update/{studentId}";
+	public static final String DELETE_STUDENT_PATH = STUDENTS_PATH + "/delete/{studentId}";
 	public static final String STUDENT_LIST_VIEW = "students/list";
 	public static final String STUDENT_DETAILS_VIEW = "/students/details";
 	public static final String CREATE_STUDENT_PATH = STUDENTS_PATH + "/create";
@@ -145,4 +146,21 @@ public class StudentViewController {
 		// Redirect to prevent duplicate updates on page refresh
 		return STUDENTS_REDIRECT;
 		}
+	
+	/**
+	 * Handles POST requests to delete a specific student by ID.
+	 *
+	 * @param studentId the unique identifier (UUID) of the student to delete
+	 * @return a redirect string to the students list page upon successful deletion
+	 * @throws NotFoundException if the student to delete does not exist
+	 */
+	@PostMapping(DELETE_STUDENT_PATH)
+	public String deleteStudent(@PathVariable UUID studentId) {
+		// Attempt to delete the student; if the service returns false (not found), throw a 404
+		if(!studentService.deleteStudentById(studentId)) {
+			throw new NotFoundException();
+		}
+		// Redirect to prevent duplicate deletions on page refresh
+		return STUDENTS_REDIRECT;
+	}
 }
