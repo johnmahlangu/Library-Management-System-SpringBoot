@@ -25,6 +25,9 @@ public class StudentViewController {
 	public static final String STUDENTS_PATH = "/students";
 	public static final String STUDENTS_REDIRECT = "redirect:/students";
 	public static final String STUDENT_PATH_ID = STUDENTS_PATH + "/{studentId}";
+	public static final String EDIT_STUDENT_PATH = STUDENTS_PATH + "/edit/{studentId}";
+	public static final String EDIT_STUDENT_VIEW = "students/edit";
+	public static final String UPDATE_STUDENT_PATH = STUDENTS_PATH + "/update/{studentId}";
 	public static final String STUDENT_LIST_VIEW = "students/list";
 	public static final String STUDENT_DETAILS_VIEW = "/students/details";
 	public static final String CREATE_STUDENT_PATH = STUDENTS_PATH + "/create";
@@ -105,4 +108,41 @@ public class StudentViewController {
 		// Redirect to prevent duplicate submissions on page refresh
 		return STUDENTS_REDIRECT;
 	}
+	
+	/**
+	 * Handles GET requests to display the "Edit Student" form populated with the existing student's current details.
+	 *
+	 * @param studentId 			the unique identifier (UUID) of the student to edit
+	 * @param model  				the Spring UI Model to pass the student data to the form
+	 * @throws NotFoundException 	if no student matches the provided UUID
+	 * @return 	the path to the student editing form view template	 
+	 */
+	@GetMapping(EDIT_STUDENT_PATH)
+	public String editStudentForm(@PathVariable UUID studentId, Model model) {
+		
+		StudentDTO studentDto = studentService.getStudentByID(studentId).orElseThrow(NotFoundException::new);		
+		model.addAttribute("editStudent", studentDto);
+		// Render the edit book HTML template
+		return EDIT_STUDENT_VIEW;
+	}
+	
+	/**
+	 * Handles POST requests to process and save updates to an existing student.
+	 * Validates the incoming form data before updating.
+	 *
+	 * @param studentId   		the unique identifier (UUID) of the student being updated
+	 * @param studentDto  		the data transfer object containing the modified student data
+	 * @param result   			holds the results of the validation check
+	 * @return the edit view if validation fails, or a redirect string if successful
+	 */
+	@PostMapping(UPDATE_STUDENT_PATH)
+	public String updateStudent(@PathVariable UUID studentId, @ModelAttribute StudentDTO studentDto, BindingResult result) {
+		// If validation constraints fail, return to the edit form
+		if(result.hasErrors()) {
+			return EDIT_STUDENT_VIEW;
+		}
+		studentService.updateStudentById(studentId, studentDto);
+		// Redirect to prevent duplicate updates on page refresh
+		return STUDENTS_REDIRECT;
+		}
 }
