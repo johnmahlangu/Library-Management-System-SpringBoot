@@ -54,13 +54,12 @@ public class IssueBookViewController {
 	 * Handles Get requests for a specific issue details(returned and active records).
 	 * 
 	 * @param issueId				unique identifier of the issue record.
-	 * @param model					the UI model to pass date to view
-	 * @param result				captures validation errors 
+	 * @param model					the UI model to pass date to view 
 	 * @throws NotFoundException 	if the provided student ID is not found
 	 * @return	the path to the issue record view template
 	 */
 	@GetMapping(ISSUE_PATH_ID)
-	public String getIssueRecord(@PathVariable UUID issueId, Model model, BindingResult result) {
+	public String getIssueRecord(@PathVariable UUID issueId, Model model) {
 		
 		IssueBookResponseDTO issue = issueBookService.getIssueBookById(issueId).orElseThrow(NotFoundException::new);
 		// add the issue record to the model
