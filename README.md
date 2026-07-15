@@ -36,6 +36,7 @@ src/
 │   │   ├── mappers/            # MapStruct interfaces: BookMapper, StudentMapper, IssueBookMapper
 │   │   ├── repositories/       # Spring Data repositories + JPA Specifications
 |   |   ├── exceptions/         # NotFoundException, BookAlreadyIssuedException, BookAlreadyReturnedException, CustomErrorController
+|   |   ├── web/                # HomeViewController, IssueBookViewController, StudentViewController, BookViewcontroller
 │   │   └── services/           # Service interfaces + JPA implementations
 │   └── resources/
 │       ├── application.properties
