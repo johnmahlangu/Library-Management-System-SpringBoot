@@ -33,6 +33,8 @@ public class IssueBookViewController {
 	public static final String CREATE_ISSUE = ISSUES_PATH + "/create";
 	public static final String CREATE_ISSUE_VIEW = "issues/create";
 	public static final String ISSUES_PATH_REDIRECT = "redirect:/issues";
+	public static final String RETURNED_BOOKS_PATH = ISSUES_PATH + "/returned";
+	public static final String RETURNED_BOOKS_VIEW = "issues/returned";
 	
 	private final IssueBookService issueBookService;
 	private final StudentService studentService;
@@ -120,5 +122,18 @@ public class IssueBookViewController {
 		model.addAttribute("activeIssues", issueBookService.listActiveIssues());
 		// Render the active issues view HTML template
 		return ACTIVE_ISSUES_VIEW;
+	}
+	/**
+	 * Handles Get requests for listing returned books.
+	 * 
+	 * @param model		Spring UI model to pass data to view
+	 * @return	the path to returned books view path
+	 */
+	@GetMapping(RETURNED_BOOKS_PATH)
+	public String returnedBooks(Model model) {
+		// Retrieve all returned book
+		model.addAttribute("returnedBooks", issueBookService.listReturnedBooks());
+		// Render returned books view HTML template
+		return RETURNED_BOOKS_VIEW;
 	}
 }
