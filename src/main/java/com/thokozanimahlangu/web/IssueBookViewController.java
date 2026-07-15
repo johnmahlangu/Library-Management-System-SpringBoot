@@ -35,6 +35,8 @@ public class IssueBookViewController {
 	public static final String ISSUES_PATH_REDIRECT = "redirect:/issues";
 	public static final String RETURNED_BOOKS_PATH = ISSUES_PATH + "/returned";
 	public static final String RETURNED_BOOKS_VIEW = "issues/returned";
+	public static final String RETURN_BOOK_PATH = ISSUES_PATH + "/return/{issueId}";
+	public static final String ACTIVE_ISSUES_REDIRECT = "redirect:/issues/active";
 	
 	private final IssueBookService issueBookService;
 	private final StudentService studentService;
@@ -135,5 +137,18 @@ public class IssueBookViewController {
 		model.addAttribute("returnedBooks", issueBookService.listReturnedBooks());
 		// Render returned books view HTML template
 		return RETURNED_BOOKS_VIEW;
+	}
+	/**
+	 * Handles Post requests for returning books.
+	 * 
+	 * @param issueId		unique identifier of the issue record
+	 * @return	a redirect path of active issues
+	 */
+	@PostMapping(RETURN_BOOK_PATH)
+	public String returnBook(@PathVariable UUID issueId) {
+		// return book via the service layer
+		issueBookService.returnBook(issueId);
+		// Redirect to prevent duplicate submissions on page refresh
+		return ACTIVE_ISSUES_REDIRECT;
 	}
 }
