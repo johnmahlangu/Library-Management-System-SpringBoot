@@ -25,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class IssueBookViewController {
 
 	public static final String ISSUES_PATH = "/issues";
+	public static final String ACTIVE_ISSUES = ISSUES_PATH + "/active";
+	public static final String ACTIVE_ISSUES_VIEW = "issues/active";
 	public static final String ISSUES_VIEW = "issues/list";
 	public static final String ISSUE_PATH_ID = ISSUES_PATH + "/{issueId}";
 	public static final String ISSUE_RECORD_VIEW = "issues/records";
@@ -106,5 +108,17 @@ public class IssueBookViewController {
 		// Redirect to prevent duplicate submissions on page refresh
 		return ISSUES_PATH_REDIRECT;
 	}
-	
+	/**
+	 * Handles Get requests for listing active issues(currently issued books)
+	 * 
+	 * @param model		Spring UI model to pass data to view
+	 * @return	the path to active issues view path
+	 */
+	@GetMapping(ACTIVE_ISSUES)
+	public String activeIssues(Model model) {
+		// Retrieve all currently issued books
+		model.addAttribute("activeIssues", issueBookService.listActiveIssues());
+		// Render the active issues view HTML template
+		return ACTIVE_ISSUES_VIEW;
+	}
 }
