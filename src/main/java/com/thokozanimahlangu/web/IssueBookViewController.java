@@ -88,7 +88,7 @@ public class IssueBookViewController {
 		// Retrieve all active students (passing nulls to bypass search filters) for selection
 		model.addAttribute("students", studentService.listStudents(null, null, null));
 		// Retrieve all books (passing nulls to bypass search filters) to populate the book selection
-		model.addAttribute("books", bookService.listBooks(null, null, null, null));
+		model.addAttribute("books", bookService.listBooks(null, null, null, null, null));
 		// Render the create issue view template
 		return CREATE_ISSUE_VIEW;
 	}

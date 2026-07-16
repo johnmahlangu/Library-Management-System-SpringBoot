@@ -42,11 +42,9 @@ public class BookController {
 		if(bookService.patchBookById(id, book).isEmpty()) {
 			
 			throw new NotFoundException();
-		}
-		
+		}		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-	
+	}	
 	/**
      * Delete a book by ID
      * Throws NotFoundException (404) if the book does not exist
@@ -59,8 +57,7 @@ public class BookController {
 			throw new NotFoundException();
 		}		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-	
+	}	
 	/**
      * Create a new book record
      * Returns 201 Created and includes the 'Location' header pointing to the new book
@@ -74,8 +71,7 @@ public class BookController {
 		headers.add("Location", BOOK_PATH + "/" + newBook.getId());
 		
 		return new ResponseEntity<>(headers, HttpStatus.CREATED);
-	}
-	
+	}	
 	/**
      * Replace an existing book with new data
      * Uses Optional.isEmpty() to verify existence; throws 404 if missing
@@ -88,8 +84,7 @@ public class BookController {
 			throw new NotFoundException();
 		}		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-	
+	}	
 	/**
      * Retrieve a single book by its UUID
      * Directly returns the DTO, mapping the empty Optional to a 404 exception
@@ -98,8 +93,7 @@ public class BookController {
 	public BookDTO getBook(@PathVariable("bookId") UUID id) {
 		
 		return bookService.getBookById(id).orElseThrow(NotFoundException::new);
-	}
-	
+	}	
 	/**
      * List all books with optional filtering
      * Filters are passed as query parameters
@@ -108,8 +102,9 @@ public class BookController {
 	public List<BookDTO> listBooks(@RequestParam(required = false) String title,
 								   @RequestParam(required = false) String author,
 							       @RequestParam(required = false) Integer publicationYear,
-								   @RequestParam(required = false) String isbn) {
+								   @RequestParam(required = false) String isbn,
+								   @RequestParam(required = false) Boolean available)	{
 		
-		return bookService.listBooks(title, author, isbn, publicationYear);
+		return bookService.listBooks(title, author, isbn, publicationYear, available);
 	}		
 }

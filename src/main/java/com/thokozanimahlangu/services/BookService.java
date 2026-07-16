@@ -14,7 +14,7 @@ public interface BookService {
 
 	Optional<BookDTO> getBookById(UUID id);
 	
-	List<BookDTO> listBooks(String title, String author, String isbn, Integer publicationYear);
+	List<BookDTO> listBooks(String title, String author, String isbn, Integer publicationYear, Boolean available);
 	
 	BookDTO saveNewBook(BookDTO newBook);
 	
