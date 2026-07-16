@@ -29,13 +29,14 @@ public class BookServiceJPA implements BookService{
 	private final BookRepository bookRepository;
 	private final BookMapper bookMapper;
 	
-	public List<BookDTO> listBooks(String title, String author, String isbn, Integer publicationYear) {
+	public List<BookDTO> listBooks(String title, String author, String isbn, Integer publicationYear, Boolean available) {
 		
 		// Build dynamic query criteria based on provided parameters
 		Specification<Book> spec = Specification.where(BookSpecification.hasAuthor(author))
 												.and(BookSpecification.hasTitle(title))
 												.and(BookSpecification.hasPublicationYear(publicationYear))
-												.and(BookSpecification.hasIsbn(isbn));
+												.and(BookSpecification.hasIsbn(isbn))
+												.and(BookSpecification.hasAvailable(available));
 		
 		// Fetch entities, map to DTOs, and return as a list
 		return bookRepository.findAll(spec)
@@ -43,8 +44,7 @@ public class BookServiceJPA implements BookService{
 							.map(book -> bookMapper.bookToBookDTO(book))
 							.collect(Collectors.toList());
 					   
-	}
-	
+	}	
 	/**
      * Finds a single book by their unique UUID.
      * Returns an Optional to handle cases where the ID might not exist.
@@ -53,8 +53,7 @@ public class BookServiceJPA implements BookService{
 		
 		return bookRepository.findById(id)
 							 .map(book -> bookMapper.bookToBookDTO(book));
-	}
-	
+	}	
 	/**
      * Persists a new book record.
      * Maps DTO to Entity for saving, then converts the result back to DTO.
@@ -62,8 +61,7 @@ public class BookServiceJPA implements BookService{
 	public BookDTO saveNewBook(BookDTO newBook) {
 		
 		return bookMapper.bookToBookDTO(bookRepository.save(bookMapper.bookDTOtoBook(newBook)));
-	}
-	
+	}	
 	/**
      * Performs a full update of an existing book.
      * Overwrites the core fields regardless of whether they are null in the DTO.
@@ -79,23 +77,19 @@ public class BookServiceJPA implements BookService{
 					
 					return bookMapper.bookToBookDTO(bookRepository.save(foundBook));
 				});
-	}
-	
+	}	
 	/**
      * Deletes a book if they exist in the database.
      * @return true if deleted, false if the record was not found.
      */
 	public Boolean deleteBookById(UUID id) {
 		
-		if (bookRepository.existsById(id)) {
-			
-			bookRepository.deleteById(id);
-			
+		if (bookRepository.existsById(id)) {			
+			bookRepository.deleteById(id);			
 			return true;
 		}		
 		return false;
-		}
-	
+		}	
 	/**
      * Performs a partial update (Patch).
      * Only updates fields that are actually provided (not null/empty) in the DTO.
@@ -115,8 +109,7 @@ public class BookServiceJPA implements BookService{
 					}
 					if (bookDto.getPublicationYear() != null) {
 						foundBook.setPublicationYear(bookDto.getPublicationYear());
-					}
-					
+					}					
 					return bookMapper.bookToBookDTO(bookRepository.save(foundBook));
 				});
 	}

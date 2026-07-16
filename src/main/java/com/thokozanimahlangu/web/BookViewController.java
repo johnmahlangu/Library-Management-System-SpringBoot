@@ -52,10 +52,11 @@ public class BookViewController {
 							@RequestParam(required = false) String author,
 							@RequestParam(required = false) Integer publicationYear,
 							@RequestParam(required = false) String isbn,
+							@RequestParam(required = false) Boolean available,
 							Model model) {
 		
 		// Fetch filtered books from the service layer and add them to the UI model
-		model.addAttribute("listBooks", bookService.listBooks(title, author, isbn, publicationYear));		
+		model.addAttribute("listBooks", bookService.listBooks(title, author, isbn, publicationYear, available));		
 		// Render the book list HTML template
 		return BOOKS_LIST_VIEW;
 	}

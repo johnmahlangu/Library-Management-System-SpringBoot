@@ -34,5 +34,10 @@ public class BookSpecification {
 	public static Specification<Book> hasPublicationYear(Integer publicationYear) {
         return (root, query, cb) -> publicationYear  == null ? null : 
                cb.equal(root.get("publicationYear"), publicationYear);
-    }
+    }	
+	// Search/filtering for book availability
+	public static Specification<Book> hasAvailable(Boolean available) {
+	    return (root,_, cb) -> available == null ? null
+	            : cb.equal(root.get("available"), available);
+	}
 }
