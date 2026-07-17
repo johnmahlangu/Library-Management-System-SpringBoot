@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns=th:"http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Library Management System</title>
+</head>
+<body>
+<header>
+	<h1>Library Management System</h1>
+	
+	<hr>
+
+</header>
+
+<main>
+	<h2>Dashboard</h2>
+	
+	<table border="1" cellpadding="10">
+		
+		<tr>
+			<th>Total Books</th>
+			<th>Total Students</th>
+			<th>Active Issues</th>
+			<th>Returned Books</th>
+		</tr>
+		
+		<tr>
+			<td th:text="${totalBooks}"></td>
+			<td th:text="${totalStudents}"></td>
+			<td th:text="${totalActiveIssues}"></td>
+			<td th:text="${totalReturnedBooks}"></td>
+		</tr>
+		
+	</table>
+	
+	<br>
+	
+	<hr>
+	
+	<h2>Quick Actions</h2>
+	
+	<table>
+	
+		<tr>		
+			<td>			
+				<form th:action="@{/books/create}" method="get">
+					<button type="submit">
+						Add New Book
+					</button>
+				</form>				
+			</td>
+			
+			<td>			
+				<form th:action="@{/students/create}" method="get">
+					<button type="submit">
+						Register Student
+					</button>
+				</form>				
+			</td>
+			
+			<td>			
+				<form th:action="@{/issues/create}" method="get">
+					<button type="submit">
+						Issue Book
+					</button>
+				</form>				
+			</td>
+	</table>
+	
+	<br>
+	
+	<hr>
+	
+	<h2>Administration</h2>
+	
+	<ul>
+		<li>
+			<a th:href="@{/books}">
+				Manage Books
+			</a>
+		</li>
+		
+		<li>
+			<a th:href="@{/students}">
+				Manage Students
+			</a>
+		</li>
+		
+		<li>
+			<a th:href="@{/issues}">
+				View All Issued Books
+			</a>
+		</li>
+		
+		<li>
+			<a th:href="@{/issues/active}">
+				View Active Issues
+			</a>
+		</li>
+		
+		<li>
+			<a th:href="@{/issues/returned}">
+				View Returned Books
+			</a>
+		</li>
+	</ul>	
+</main>
+
+<hr>
+
+</body>
+</html>
