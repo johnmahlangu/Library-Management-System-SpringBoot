@@ -101,7 +101,7 @@ class BookControllerTest {
 	@Test
 	void listBooks() throws Exception {
 		
-		given(bookService.listBooks(any(), any(), any(), any())).willReturn(List.of(createValidBook(), createValidBook()));
+		given(bookService.listBooks(any(), any(), any(), any(), any())).willReturn(List.of(createValidBook(), createValidBook()));
 		
 		mockMvc.perform(get(BookController.BOOK_PATH)
 			   .accept(MediaType.APPLICATION_JSON))
