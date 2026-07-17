@@ -14,19 +14,19 @@ public class StudentSpecification {
 
 		//Case-insensitive search for the student's first name.
 		public static Specification<Student> hasFirstName(String firstName) {
-	        return (root, query, cb) -> !StringUtils.hasText(firstName) ? null : 
+	        return (root,_, cb) -> !StringUtils.hasText(firstName) ? null : 
 	               cb.like(cb.lower(root.get("firstName")), "%" + firstName.toLowerCase() + "%");
 	    }
 		
 		//Case-insensitive search for the student's last name.
 		public static Specification<Student> hasLastName(String lastName) {
-	        return (root, query, cb) -> !StringUtils.hasText(lastName) ? null : 
+	        return (root,_, cb) -> !StringUtils.hasText(lastName) ? null : 
 	               cb.like(cb.lower(root.get("lastName")), "%" + lastName.toLowerCase() + "%");
 		}
 		
 		//Case-insensitive search for the student's email.
 		public static Specification<Student> hasEmail(String email) {
-	        return (root, query, cb) -> !StringUtils.hasText(email) ? null : 
+	        return (root,_, cb) -> !StringUtils.hasText(email) ? null : 
 	        		cb.like(cb.lower(root.get("email")), "%" + email.toLowerCase() + "%");
 		}
 }
