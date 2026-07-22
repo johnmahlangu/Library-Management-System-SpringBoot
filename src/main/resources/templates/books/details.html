@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Book Details</title>
+</head>
+<body>
+
+<h2>Book Details</h2>
+<hr>
+
+<table border = "1" cellpadding = "8">
+
+<tr>
+	<th>Title</th>
+	<td th:text = "${book.title}"></td>
+</tr>
+
+<tr>
+	<th>Author</th>
+	<td th:text = "${book.author}"></td>
+</tr>
+
+<tr>
+	<th>ISBN</th>
+	<td th:text = "${book.isbn}"></td>
+</tr>
+
+<tr>
+	<th>Publication Year</th>
+	<td th:text = "${book.publicationYear}"></td>
+</tr>
+
+<tr>
+	<th>Title</th>
+	<td th:text = "${book.available ? 'Yes' : 'No'}"></td>
+</tr>
+
+</table>
+
+<br>
+
+<a th:href = "@{/books/edit/{bookId}(bookId=${book.id})}">
+	Edit Book
+</a>
+
+<a th:href = "@{/books}">
+	Back to Book List
+</a>
+</body>
+</html>
