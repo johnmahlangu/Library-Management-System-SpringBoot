@@ -1,16 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns=th:"http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Library Management System</title>
-</head>
-<body>
-<header>
-	<h1>Library Management System</h1>
-	
-	<hr>
+<head th:replace="~{fragments/head :: head('Dashboard')}"></head>
 
-</header>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <main>
 	<h2>Dashboard</h2>
@@ -106,7 +102,7 @@
 	</ul>	
 </main>
 
-<hr>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

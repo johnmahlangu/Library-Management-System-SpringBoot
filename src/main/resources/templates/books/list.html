@@ -1,25 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Manage Books</title>
-</head>
+<head th:replace="~{fragments/head :: head('Manage Books')}"></head>
 <body>
 
-<h1>Library Management System</h1>
+<div th:replace="~{fragments/header :: header}"></div>
 
-<hr>
-
-<nav>
-	<a th:href="@{/}">Dashboard</a>
-	<a th:href="@{/books}">Books</a>
-	<a th:href="@{/students}">Students</a>
-	<a th:href="@{/issues}">Issued Books</a>
-	<a th:href="@{/issues/active}">Active Books</a>
-	<a th:href="@{/issues/returned}">Returned Books</a>
-</nav>
-
-<hr>
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 
 <h2>Manage Books</h2>
 
@@ -77,7 +63,7 @@
 
 <br>
 
-<table border="1" cellpadding="8">
+<table border="1">
 
 	<thead>
 	
@@ -104,11 +90,11 @@
 			<a th:href="@{/books/{bookId}(bookId=${book.id})}">
 				View
 			</a>
-			
+			|
 			<a th:href="@{/books/edit/{bookId}(bookId=${book.id})}">
 				Edit
 			</a>
-			
+			|
 			<form th:action="@{/books/delete/{bookId}(bookId=${book.id})}"
 				  method="post"
 				  style="display:inline;">
@@ -125,5 +111,7 @@
 	
 	</tbody>
 </table>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
