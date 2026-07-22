@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Manage Books</title>
+</head>
+<body>
+
+<h1>Library Management System</h1>
+
+<hr>
+
+<nav>
+	<a th:href="@{/}">Dashboard</a>
+	<a th:href="@{/books}">Books</a>
+	<a th:href="@{/students}">Students</a>
+	<a th:href="@{/issues}">Issued Books</a>
+	<a th:href="@{/issues/active}">Active Books</a>
+	<a th:href="@{/issues/returned}">Returned Books</a>
+</nav>
+
+<hr>
+
+<h2>Manage Books</h2>
+
+<h3>Search Books</h3>
+
+<form th:action="@{/books}" method="get">
+
+	<table>
+	
+		<tr>
+			<td>Title</td>
+			<td><input type="text" name="title"></td>
+		</tr>
+		
+		<tr>
+			<td>Author</td>
+			<td><input type="text" name="author"></td>
+		</tr>
+		
+		<tr>
+			<td>ISBN</td>
+			<td><input type="text" name="isbn"></td>
+		</tr>
+		
+		<tr>
+			<td>Publication Year</td>
+			<td><input type="number" name="publicationYear"></td>
+		</tr>
+		
+		<tr>
+			<td>Availability</td>
+			<td>
+				<select name="available">
+					<option value="">All Books</option>
+					<option value="true">Available</option>
+					<option value="false">Unavailable</option>
+				</select>
+			</td>
+		</tr>
+		
+		<tr>
+			<td colspan="2">
+				<button type="submit">Search</button>
+				<a th:href="@{/books}">Clear Search</a>
+			</td>
+		</tr>
+	</table>
+</form>
+
+<hr>
+
+<form th:action="@{/books/create}" method="get">
+	<button type="submit">Add New Book</button>
+</form>
+
+<br>
+
+<table border="1" cellpadding="8">
+
+	<thead>
+	
+	<tr>
+		<th>Title</th>
+		<th>Author</th>
+		<th>ISBN</th>
+		<th>Publication Year</th>
+		<th>Available</th>
+		<th>Actions</th>
+	</tr>
+	
+	<tbody>
+	
+	<tr th:each="book: ${listBooks}">
+		
+		<td th:text="${book.title}"></td>
+		<td th:text="${book.author}"></td>
+		<td th:text="${book.isbn}"></td>
+		<td th:text="${book.publicationYear}"></td>
+		<td th:text="${book.available ? 'Yes' : 'No'}"></td>
+		
+		<td>
+			<a th:href="@{/books/{bookId}(bookId=${book.id})}">
+				View
+			</a>
+			
+			<a th:href="@{/books/edit/{bookId}(bookId=${book.id})}">
+				Edit
+			</a>
+			
+			<form th:action="@{/books/delete/{bookId}(bookId=${book.id})}"
+				  method="post"
+				  style="display:inline;">
+				  
+				  <button type="submit">
+				  	Delete
+				  </button>
+				  
+			</form>
+			
+		</td>
+		
+	</tr>	
+	
+	</tbody>
+</table>
+</body>
+</html>
