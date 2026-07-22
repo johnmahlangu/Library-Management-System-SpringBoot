@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Manage Students')}"></head>
+
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<h2>Manage Students</h2>
+
+<h3>Search Books</h3>
+
+<form th:action="@{/students}" method="get">
+
+<table>
+
+	<tr>
+		<td>First Name</td>
+		<td><input type="text" name="firstName"></td>
+	</tr>
+	
+	<tr>
+		<td>Last Name</td>
+		<td><input type="text" name="lastName"></td>
+	</tr>
+	
+	<tr>
+		<td>Email</td>
+		<td><input type="text" name="email"></td>
+	</tr>
+	
+	<tr>
+		<td colspan="2">
+			<button type="submit">Search</button>
+			<a th:href="@{/students}">Clear Search</a>
+		</td>
+	</tr>
+</table>
+</form>
+<hr>
+<form th:action="@{/students/create}" method="get">
+<button type="submit">Add New Student</button>
+</form>
+
+<br>
+
+<table border="1">
+
+	<thead>
+		<tr>
+			<th>First Name</th>
+			<th>Last Name</th>
+			<th>Email</th>
+			<th>Actions</th>
+		</tr>
+		
+	<tbody>
+		<tr th:each="student : ${listStudents}">
+			<td th:text="${student.firstName}"></td>
+			<td th:text="${student.lastName}"></td>
+			<td th:text="${student.email}"></td>
+			<td>
+				<a th:href="@{/students/{studentId}(studentId=${student.id})}">
+					View
+				</a>
+				|
+				<a th:href="@{/students/edit/{studentId}(studentId=${student.id})}">
+					Edit
+				</a>
+				|
+				<form th:action="@{/students/delete/{studentId}(studentId=${student.id})}"
+					  style="display:inline;"
+					  method="post">
+				<button type="submit">
+					Delete
+				</button>
+				</form>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
