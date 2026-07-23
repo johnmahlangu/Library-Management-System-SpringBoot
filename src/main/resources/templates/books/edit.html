@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Edit Book</title>
-</head>
+<head th:replace="~{fragments/head :: head('Edit Book')}"></head>
+
 <body>
 
 <h2> Edit Book</h2>
@@ -16,43 +14,37 @@
 
 <table>
 
-<tr>
-	<td>Title</td>
-	<td><input type="text" th:field="*{title}"></td>
-</tr>
-
-<tr>
-	<td>Author</td>
-	<td><input type="text" th:field="*{author}"></td>
-</tr>
+	<tr>
+		<td>Title</td>
+		<td><input type="text" th:field="*{title}"></td>
+	</tr>
 	
-<tr>
-	<td>ISBN</td>
-	<td><input type="text" th:field="*{isbn}"></td>
-</tr>
-
-<tr>
-	<td>Publication Year</td>
-	<td><input type="number" th:field="*{publicationYear}"></td>
-</tr>
-
-<tr>
-	<td>Available</td>
-	<td><input type="checkbox" th:field="*{available}"></td>
-</tr>
-<tr>
-<td colspan="2">
-
-<button type="submit">
-	Update Book
-</button>
-
-<a th:href="@{/books}">
-	Cancel
-</a>
-
-</td>
-</tr>
+	<tr>
+		<td>Author</td>
+		<td><input type="text" th:field="*{author}"></td>
+	</tr>
+		
+	<tr>
+		<td>ISBN</td>
+		<td><input type="text" th:field="*{isbn}"></td>
+	</tr>
+	
+	<tr>
+		<td>Publication Year</td>
+		<td><input type="number" th:field="*{publicationYear}"></td>
+	</tr>
+	
+	<tr>
+		<td>Available</td>
+		<td><input type="checkbox" th:field="*{available}"></td>
+	</tr>
+	
+	<tr>
+		<td colspan="2">		
+		<button type="submit">Update Book</button>		
+		<a th:href="@{/books}">Cancel</a>		
+		</td>
+	</tr>
 </table>	  
 </form>
 </body>
