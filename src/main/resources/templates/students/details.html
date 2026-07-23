@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Student Details')}"></head>
+
+<body>
+
+<h2>Students Details</h2>
+<hr>
+
+<table border="1">
+
+	<tr>
+		<td>First Name</td>
+		<td th:text = "${student.firstName}"></td>
+	</tr>
+	
+	<tr>
+		<td>Last Name</td>
+		<td th:text = "${student.lastName}"></td>
+	</tr>
+	
+	<tr>
+		<td>Email</td>
+		<td th:text = "${student.email}"></td>
+	</tr>
+	
+</table>
+
+<br>
+
+<a th:href = "@{students/edit/{studentId}(studentId=${student.id})}">Edit Student Details</a>
+|
+<a th:href = "@{/students}">Back to Student List</a>
+</body>
+</html>
