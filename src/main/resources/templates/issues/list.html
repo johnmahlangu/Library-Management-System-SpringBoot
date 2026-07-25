@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace = "~{fragments/head :: head('Issue Records')}"></head>
+
+<body>
+
+<div th:replace = "~{fragments/header :: header}"></div>
+<div th:replace = "~{fragments/navbar :: navbar}"></div>
+
+<h2>Issued Books</h2>
+
+<p>
+	<a th:href="@{/issues/create}">
+		<button>Issue New Book</button>
+	</a>
+</p>
+
+<table border="1">
+	
+	<thead>
+		<tr>
+			<th>Student</th>
+			<th>Book</th>
+			<th>Issue Date</th>
+			<th>Due Date</th>
+			<th>Returned</th>
+			<th>Status</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+		<tr th:each="issue : ${listIssues}">
+			<td th:text="${issue.firstName + ' ' + issue.lastName}"></td>
+			<td th:text="${issue.bookTitle}"></td>
+			<td th:text="${issue.issueDate}"></td>
+			<td th:text="${issue.dueDate}"></td>
+			<td th:text="${issue.returnDate}"></td>
+			<td th:text="${issue.status}"></td>
+			<td>
+				<a th:href="@{/issues/{issueId}(issueId=${issue.id})}">
+					View
+				</a>
+				|
+				<form th:if="${issue.returnDate == null}"
+					  th:action="@{/issues/return/{issueId}(issueId=${issue.id})}"
+					  method="post"
+					  style="display:inline">
+					  
+					  <button type="submit">
+					  	Return
+					  </button>
+				</form>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
