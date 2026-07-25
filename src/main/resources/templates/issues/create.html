@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace = "~{fragments/head :: head('Issue Book')}"></head>
+
+<body>
+
+<div th:replace = "~{fragments/header :: header}"></div>
+<div th:replace = "~{fragments/navbar :: navbar}"></div>
+
+<h2>Issue Book</h2>
+
+<form th:action="@{/issues}"
+	  th:object="${issueRequest}"
+	  method="post">
+	  
+<table>
+
+	<tr>	
+		<td>Student</td>
+		
+		<td>
+			<select th:field="*{studentId}">
+				<option value="">Select Student</option>
+				
+				<option th:each="student : ${students}"
+						th:value="${student.id}"
+						th:text="${student.firstName + ' ' + student.lastName}">
+				</option>
+			</select>
+		</td>		
+	</tr>
+	
+	<tr>		
+		<td>Book</td>
+		
+		<td>
+			<select th:field="*{bookId}">
+				<option value="">Select Book</option>
+				
+				<option th:each="book : ${books}"
+						th:if="${book.available}"
+						th:value="${book.id}"
+						th:text="${book.title}">
+				</option>
+			</select>
+		</td>		
+	</tr>
+	
+	<tr>	
+		<td>Due Date</td>
+		
+		<td>
+			<input type="date" th:field="*{dueDate}">
+		</td>		
+	</tr>
+	
+	<tr>	
+		<td colspan="2">
+			<button type="submit">Issue Book</button>
+		</td>
+	</tr>
+			
+</table>
+
+</form>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
