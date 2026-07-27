@@ -37,13 +37,13 @@ public class StudentController {
      * Filters are passed as query parameters
      */
 	@GetMapping(STUDENT_PATH)
-	public List<StudentDTO> listStudents(@RequestParam(required = false) String firstName,
+	public List<StudentDTO> listStudents(@RequestParam(required = false) UUID studentId,
+										 @RequestParam(required = false) String firstName,
 										 @RequestParam(required = false) String lastName,
 										 @RequestParam(required = false) String email) {
 		
-		return studentService.listStudents(firstName, lastName, email);
-	}
-	
+		return studentService.listStudents(studentId, firstName, lastName, email);
+	}	
 	/**
      * Retrieve a single student by its UUID
      * Directly returns the DTO, mapping the empty Optional to a 404 exception
@@ -52,8 +52,7 @@ public class StudentController {
 	public StudentDTO getStudent(@PathVariable("studentId") UUID id) {
 		
 		return studentService.getStudentByID(id).orElseThrow(NotFoundException::new);
-	}
-	
+	}	
 	/**
      * Create a new student record
      * Returns 201 Created and includes the 'Location' header pointing to the new book
@@ -68,7 +67,6 @@ public class StudentController {
 		
 		return new ResponseEntity<>(headers, HttpStatus.CREATED);
 	}
-	
 	/**
      * Delete a student by ID
      * Throws NotFoundException (404) if the book does not exist
@@ -76,13 +74,11 @@ public class StudentController {
 	@DeleteMapping(STUDENT_PATH_ID)
 	public ResponseEntity<?> deleteStudent(@PathVariable("studentId") UUID id) {
 		
-		if (!studentService.deleteStudentById(id)) {
-			
+		if (!studentService.deleteStudentById(id)) {			
 			throw new NotFoundException();
 		}		
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-	
+	}	
 	/**
      * Replace an existing student with new data
      * Uses Optional.isEmpty() to verify existence; throws 404 if missing
@@ -90,13 +86,11 @@ public class StudentController {
 	@PutMapping(STUDENT_PATH_ID)
 	public ResponseEntity<?> updateStudent(@PathVariable("studentId") UUID id, @Validated @RequestBody StudentDTO student) {
 		
-		if (studentService.updateStudentById(id, student).isEmpty()) {
-			
+		if (studentService.updateStudentById(id, student).isEmpty()) {			
 			throw new NotFoundException();
 		}	
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-	
+	}	
 	/**
      * Partially update an existing student
      * Validates input and returns 204 No Content upon success
@@ -104,8 +98,7 @@ public class StudentController {
 	@PatchMapping(STUDENT_PATH_ID)
 	public ResponseEntity<?> patchStudent(@PathVariable("studentId") UUID id, @RequestBody StudentDTO student) {
 		
-		if (studentService.patchStudentById(id, student).isEmpty()) {
-			
+		if (studentService.patchStudentById(id, student).isEmpty()) {			
 			throw new NotFoundException();
 		}	
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);

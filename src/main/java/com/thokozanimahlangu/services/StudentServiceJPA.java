@@ -21,29 +21,25 @@ import lombok.RequiredArgsConstructor;
  * Retrieves a list of students filtered by optional criteria.
  * Uses JPA Specifications for dynamic query building.
  */
-
 @Service
 @RequiredArgsConstructor
 public class StudentServiceJPA implements StudentService{
 
 	private final StudentMapper studentMapper;
 	private final StudentRepository studentRepository;
-	
-	
-	public List<StudentDTO> listStudents(String firstName, String lastName, String email) {
 		
+	public List<StudentDTO> listStudents(UUID studentId, String firstName, String lastName, String email) {		
 		// Build dynamic query criteria based on provided parameters
 		Specification<Student> spec = Specification.where(StudentSpecification.hasFirstName(firstName))
 												    .and(StudentSpecification.hasLastName(lastName))
-												    .and(StudentSpecification.hasEmail(email));
-		
+												    .and(StudentSpecification.hasEmail(email))
+												    .and(StudentSpecification.hasStudentId(studentId));		
 		// Fetch entities, map to DTOs, and return as a list
 		return studentRepository.findAll(spec)
 								.stream()
 								.map(student -> studentMapper.studentToStudentDTO(student))
 								.collect(Collectors.toList());
-	}
-	
+	}	
 	/**
      * Finds a single student by their unique UUID.
      * Returns an Optional to handle cases where the ID might not exist.
@@ -52,8 +48,7 @@ public class StudentServiceJPA implements StudentService{
 		
 		return studentRepository.findById(id)
 								.map(student -> studentMapper.studentToStudentDTO(student));
-	}
-	
+	}	
 	/**
      * Persists a new student record.
      * Maps DTO to Entity for saving, then converts the result back to DTO.
@@ -61,24 +56,19 @@ public class StudentServiceJPA implements StudentService{
 	public StudentDTO saveNewStudent(StudentDTO student) {
 		
 		return studentMapper.studentToStudentDTO(studentRepository.save(studentMapper.studentDTOtoStudent(student)));
-	}
-	
+	}	
 	/**
      * Deletes a student if they exist in the database.
      * @return true if deleted, false if the record was not found.
      */
 	public Boolean deleteStudentById(UUID id) {
 		
-		if (studentRepository.existsById(id)) {
-			
-			studentRepository.deleteById(id);
-			
+		if (studentRepository.existsById(id)) {			
+			studentRepository.deleteById(id);			
 			return true;
-		}
-		
+		}		
 		return false;
-	}
-	
+	}	
 	/**
      * Performs a full update of an existing student.
      * Overwrites the core fields regardless of whether they are null in the DTO.
@@ -93,8 +83,7 @@ public class StudentServiceJPA implements StudentService{
 									
 									return studentMapper.studentToStudentDTO(studentRepository.save(foundStudent));
 								});
-	}
-	
+	}	
 	/**
      * Performs a partial update (Patch).
      * Only updates fields that are actually provided (not null/empty) in the DTO.
@@ -114,8 +103,7 @@ public class StudentServiceJPA implements StudentService{
 									// Only update email if text is actually provided
 									if (StringUtils.hasText(studentDto.getEmail())) {
 										foundStudent.setEmail(studentDto.getEmail());
-									}
-									
+									}									
 									return studentMapper.studentToStudentDTO(studentRepository.save(foundStudent));
 								});
 	}

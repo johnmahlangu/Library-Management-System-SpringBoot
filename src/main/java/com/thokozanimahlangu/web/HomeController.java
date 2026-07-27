@@ -34,7 +34,7 @@ public class HomeController {
 		model.addAttribute("totalBooks", bookService.listBooks(null, null, null, null, null).size());
 		
 		// Fetch total count of all students in the system (passing nulls to bypass filtering)
-		model.addAttribute("totalStudents", studentService.listStudents(null, null, null).size());
+		model.addAttribute("totalStudents", studentService.listStudents(null, null, null, null).size());
 		
 		// Fetch the total count of books currently issued/borrowed out
 		model.addAttribute("totalActiveIssues", issueBookService.listActiveIssues().size());

@@ -15,7 +15,7 @@ public interface StudentService {
 
 	Optional<StudentDTO> getStudentByID(UUID id);
 	
-	List<StudentDTO> listStudents(String firstName, String lastName, String email);
+	List<StudentDTO> listStudents(UUID studentId,String firstName, String lastName, String email);
 	
 	StudentDTO saveNewStudent(StudentDTO studentDto);
 	

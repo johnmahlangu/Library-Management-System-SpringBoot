@@ -46,16 +46,16 @@ public class StudentViewController {
 	 * @return the path to the student list view template
 	 */
 	@GetMapping(STUDENTS_PATH)
-	public String listStudents(@RequestParam(required = false) String firstName,
+	public String listStudents(@RequestParam(required = false) UUID id,
+							   @RequestParam(required = false) String firstName,
 							   @RequestParam(required = false) String lastName,
 							   @RequestParam(required = false) String email,
 							   Model model) {
 		// Fetch filtered students from the service layer and add them to the UI model
-		model.addAttribute("listStudents", studentService.listStudents(firstName, lastName, email));
+		model.addAttribute("listStudents", studentService.listStudents(id, firstName, lastName, email));
 		// Render the student list HTML template
 		return STUDENT_LIST_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles GET requests to retrieve and display details for a specific student.
 	 *
@@ -73,8 +73,7 @@ public class StudentViewController {
 		model.addAttribute("student", student);
 		// Render the student details HTML template
 		return STUDENT_DETAILS_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles GET requests to display the "Create New Student" form.
 	 * Initializes an empty StudentDTO to bind form fields.
@@ -88,8 +87,7 @@ public class StudentViewController {
 		model.addAttribute("createStudent", new StudentDTO());
 		// Render the create student HTML template
 		return CREATE_STUDENT_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles POST requests to process and save a new student submission.;
 	 * Validates the input data before persisting it via the service layer.
@@ -108,8 +106,7 @@ public class StudentViewController {
 		studentService.saveNewStudent(studentDto);
 		// Redirect to prevent duplicate submissions on page refresh
 		return STUDENTS_REDIRECT;
-	}
-	
+	}	
 	/**
 	 * Handles GET requests to display the "Edit Student" form populated with the existing student's current details.
 	 *
@@ -125,8 +122,7 @@ public class StudentViewController {
 		model.addAttribute("editStudent", studentDto);
 		// Render the edit book HTML template
 		return EDIT_STUDENT_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles POST requests to process and save updates to an existing student.
 	 * Validates the incoming form data before updating.
@@ -145,8 +141,7 @@ public class StudentViewController {
 		studentService.updateStudentById(studentId, studentDto);
 		// Redirect to prevent duplicate updates on page refresh
 		return STUDENTS_REDIRECT;
-		}
-	
+		}	
 	/**
 	 * Handles POST requests to delete a specific student by ID.
 	 *
