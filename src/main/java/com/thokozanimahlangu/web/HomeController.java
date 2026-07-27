@@ -31,7 +31,7 @@ public class HomeController {
 	public String home(Model model) {
 		
 		// Fetch total count of all books in the system (passing nulls to bypass filtering)
-		model.addAttribute("totalBooks", bookService.listBooks(null, null, null, null, null).size());
+		model.addAttribute("totalBooks", bookService.listBooks(null, null, null, null, null, null).size());
 		
 		// Fetch total count of all students in the system (passing nulls to bypass filtering)
 		model.addAttribute("totalStudents", studentService.listStudents(null, null, null, null).size());

@@ -1,6 +1,8 @@
 package com.thokozanimahlangu.repositories;
 
 
+import java.util.UUID;
+
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
@@ -13,6 +15,11 @@ import com.thokozanimahlangu.entities.Book;
 
 public class BookSpecification {
 
+	// Search book by the book's id.
+	public static Specification<Book> hasId(UUID id) {
+		return(root,_,cb) -> id == null ? null :
+			cb.equal(root.get("id"), id);
+	}
 	//Case-insensitive search for the book title.
 	public static Specification<Book> hasTitle(String title) {
         return (root,_, cb) -> !StringUtils.hasText(title) ? null : 

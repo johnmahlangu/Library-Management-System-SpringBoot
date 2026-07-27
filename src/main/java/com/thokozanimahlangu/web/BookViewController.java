@@ -48,7 +48,8 @@ public class BookViewController {
 	 * @return the path to the book list view template
 	 */
 	@GetMapping(BOOKS_PATH)
-	public String listBooks(@RequestParam(required = false) String title,
+	public String listBooks(@RequestParam(required = false) UUID id,
+							@RequestParam(required = false) String title,
 							@RequestParam(required = false) String author,
 							@RequestParam(required = false) Integer publicationYear,
 							@RequestParam(required = false) String isbn,
@@ -56,11 +57,10 @@ public class BookViewController {
 							Model model) {
 		
 		// Fetch filtered books from the service layer and add them to the UI model
-		model.addAttribute("listBooks", bookService.listBooks(title, author, isbn, publicationYear, available));		
+		model.addAttribute("listBooks", bookService.listBooks(id, title, author, isbn, publicationYear, available));		
 		// Render the book list HTML template
 		return BOOKS_LIST_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles GET requests to retrieve and display details for a specific book.
 	 *
@@ -74,14 +74,12 @@ public class BookViewController {
 		
 		// Fetch the book by ID; if it does not exist, throw a NotFoundException
 		BookDTO book = bookService.getBookById(bookId)
-				   .orElseThrow(NotFoundException::new);
-		
+				   .orElseThrow(NotFoundException::new);		
 		// Add existing book to the UI model;
 		model.addAttribute("book", book);
 		// Render the book details HTML template
 		return BOOK_DETAILS_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles GET requests to display the "Create New Book" form.
 	 * Initializes an empty BookDTO to bind form fields.
@@ -96,8 +94,7 @@ public class BookViewController {
 		model.addAttribute("createBook", new BookDTO());
 		// Render the create book HTML template
 		return CREATE_BOOK_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles POST requests to process and save a new book submission.;
 	 * Validates the input data before persisting it via the service layer.
@@ -111,13 +108,11 @@ public class BookViewController {
 		// If validation constraints fail, return to the create book form
 		if(result.hasErrors()) {
 			return CREATE_BOOK_VIEW;
-		}
-		
+		}		
 		bookService.saveNewBook(bookDto);
 		// Redirect to prevent duplicate submissions on page refresh
 		return BOOKS_REDIRECT;
-	}
-	
+	}	
 	/**
 	 * Handles GET requests to display the "Edit Book" form populated with 
 	 * the existing book's current details.
@@ -135,8 +130,7 @@ public class BookViewController {
 		model.addAttribute("editBook", book);
 		// Render the edit book HTML template
 		return EDIT_BOOK_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles POST requests to process and save updates to an existing book.
 	 * Validates the incoming form data before updating.
@@ -151,8 +145,7 @@ public class BookViewController {
 		// If validation constraints fail, return to the edit form
 		if(result.hasErrors()) {
 			return EDIT_BOOK_VIEW;
-		}
-		
+		}		
 		bookService.updateBookById(bookId, bookDto);
 		// Redirect to prevent duplicate updates on page refresh
 		return BOOKS_REDIRECT;

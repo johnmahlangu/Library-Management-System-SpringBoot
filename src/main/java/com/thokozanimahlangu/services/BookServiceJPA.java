@@ -29,21 +29,20 @@ public class BookServiceJPA implements BookService{
 	private final BookRepository bookRepository;
 	private final BookMapper bookMapper;
 	
-	public List<BookDTO> listBooks(String title, String author, String isbn, Integer publicationYear, Boolean available) {
+	public List<BookDTO> listBooks(UUID id, String title, String author, String isbn, Integer publicationYear, Boolean available) {
 		
 		// Build dynamic query criteria based on provided parameters
 		Specification<Book> spec = Specification.where(BookSpecification.hasAuthor(author))
 												.and(BookSpecification.hasTitle(title))
 												.and(BookSpecification.hasPublicationYear(publicationYear))
 												.and(BookSpecification.hasIsbn(isbn))
-												.and(BookSpecification.hasAvailable(available));
-		
+												.and(BookSpecification.hasAvailable(available))
+												.and(BookSpecification.hasId(id));		
 		// Fetch entities, map to DTOs, and return as a list
 		return bookRepository.findAll(spec)
 							.stream()
 							.map(book -> bookMapper.bookToBookDTO(book))
-							.collect(Collectors.toList());
-					   
+							.collect(Collectors.toList());					   
 	}	
 	/**
      * Finds a single book by their unique UUID.
