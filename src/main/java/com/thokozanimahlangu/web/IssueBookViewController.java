@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.thokozanimahlangu.exceptions.NotFoundException;
 import com.thokozanimahlangu.models.IssueBookRequestDTO;
@@ -43,19 +44,30 @@ public class IssueBookViewController {
 	private final BookService bookService;
 	
 	/**
-	 * Handles Get Requests to list all issue book records(active and history records).
+	 * Displays the list of book issues with optional status filtering.
 	 *  
 	 * @param model		Spring UI model to pass data to view
 	 * @return path to the issues record view template
 	 */
 	@GetMapping(ISSUES_PATH)
-	public String listIssues(Model model) {
-		// Fetch all issue records via the service layer and add them to the model
-		model.addAttribute("listIssues", issueBookService.listIssuedBooks());
+	public String listIssues(@RequestParam(required = false) String status,
+							 Model model) {	
+		// Filter issue records based on selected status filter
+		if ("ACTIVE".equalsIgnoreCase(status)) {			
+			model.addAttribute("listIssues", issueBookService.listActiveIssues());
+		} 
+		else if ("RETURNED".equalsIgnoreCase(status)) {		
+			model.addAttribute("listIssues", issueBookService.listReturnedBooks());
+		}
+		else {
+			// Fetch all issue records when no filter or 'All Issues' is selected
+			model.addAttribute("listIssues", issueBookService.listIssuedBooks());
+		}
+		// Send status back to Thymeleaf so the dropdown keeps the selected option highlighted
+		model.addAttribute("selectedStatus", status);
 		// Render the issue records template	
 		return ISSUES_VIEW;	
-	}
-	
+	}	
 	/**
 	 * Handles Get requests for a specific issue details(returned and active records).
 	 * 
@@ -72,8 +84,7 @@ public class IssueBookViewController {
 		model.addAttribute("issueRecords", issue);
 		// Render the issue record HTML template
 		return ISSUE_RECORD_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles GET requests to display the "Issue Book" form.
 	 * Populates the UI model with an empty request DTO and lists of all students and books to populate the form.
@@ -91,8 +102,7 @@ public class IssueBookViewController {
 		model.addAttribute("books", bookService.listBooks(null, null, null, null, null, null));
 		// Render the create issue view template
 		return CREATE_ISSUE_VIEW;
-	}
-	
+	}	
 	/**
 	 * Handles POST requests to process and save a new issue record submission.;
 	 * Validates the input data before persisting it via the service layer.
@@ -111,32 +121,6 @@ public class IssueBookViewController {
 		issueBookService.saveIssueBook(request);
 		// Redirect to prevent duplicate submissions on page refresh
 		return ISSUES_PATH_REDIRECT;
-	}
-	/**
-	 * Handles Get requests for listing active issues(currently issued books)
-	 * 
-	 * @param model		Spring UI model to pass data to view
-	 * @return	the path to active issues view path
-	 */
-	@GetMapping(ACTIVE_ISSUES)
-	public String activeIssues(Model model) {
-		// Retrieve all currently issued books
-		model.addAttribute("activeIssues", issueBookService.listActiveIssues());
-		// Render the active issues view HTML template
-		return ACTIVE_ISSUES_VIEW;
-	}
-	/**
-	 * Handles Get requests for listing returned books.
-	 * 
-	 * @param model		Spring UI model to pass data to view
-	 * @return	the path to returned books view path
-	 */
-	@GetMapping(RETURNED_BOOKS_PATH)
-	public String returnedBooks(Model model) {
-		// Retrieve all returned book
-		model.addAttribute("returnedBooks", issueBookService.listReturnedBooks());
-		// Render returned books view HTML template
-		return RETURNED_BOOKS_VIEW;
 	}
 	/**
 	 * Handles Post requests for returning books.

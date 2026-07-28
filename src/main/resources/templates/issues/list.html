@@ -7,13 +7,27 @@
 <div th:replace = "~{fragments/header :: header}"></div>
 <div th:replace = "~{fragments/navbar :: navbar}"></div>
 
-<h2>Issued Books</h2>
+<h2>Issues Records</h2>
 
 <p>
 	<a th:href="@{/issues/create}">
 		<button>Issue New Book</button>
 	</a>
 </p>
+
+<form th:action="@{/issues}" method="get">
+
+	<label>Status:</label>
+	
+	<select name="status" onchange="this.form.submit()">
+		
+		<option value="" th:selected="${selectedStatus == null}">All Issues</option>
+		<option value="ACTIVE" th:selected="${selectedStatus == 'ACTIVE'}">Issued</option>
+		<option value="RETURNED" th:selected="${selectedStatus == 'RETURNED'}">Returned</option>
+		
+	</select>
+	
+</form>
 
 <table border="1">
 	

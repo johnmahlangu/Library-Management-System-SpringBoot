@@ -99,12 +99,13 @@ public class BookController {
      * Filters are passed as query parameters
      */
 	@GetMapping(BOOK_PATH)
-	public List<BookDTO> listBooks(@RequestParam(required = false) String title,
+	public List<BookDTO> listBooks(@RequestParam(required = false) UUID id,
+								   @RequestParam(required = false) String title,
 								   @RequestParam(required = false) String author,
 							       @RequestParam(required = false) Integer publicationYear,
 								   @RequestParam(required = false) String isbn,
 								   @RequestParam(required = false) Boolean available)	{
 		
-		return bookService.listBooks(title, author, isbn, publicationYear, available);
+		return bookService.listBooks(id, title, author, isbn, publicationYear, available);
 	}		
 }
