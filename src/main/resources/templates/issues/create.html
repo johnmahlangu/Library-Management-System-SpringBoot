@@ -24,7 +24,7 @@
 				
 				<option th:each="student : ${students}"
 						th:value="${student.id}"
-						th:text="${student.firstName + ' ' + student.lastName}">
+						th:text="${student.firstName + ' ' + student.lastName + ' (ID: ' + student.id + ')'}">
 				</option>
 			</select>
 		</td>		
