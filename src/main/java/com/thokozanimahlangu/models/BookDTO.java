@@ -28,7 +28,7 @@ public class BookDTO {
 	@NotBlank(message = "Please enter the author's name")
 	private String author;
 	
-	@NotNull(message = "Please enter the publication Year")
+	@NotNull(message = "Please enter the publication year")
 	private Integer publicationYear;
 	
 	@NotBlank(message = "Please enter the ISBN")
