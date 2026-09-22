@@ -16,22 +16,62 @@
 
 	<tr>
 		<td>Title</td>
-		<td><input type="text" th:field="*{title}"></td>
+		<td>
+			<input type="text"
+				   id="title"
+           		   th:field="*{title}"
+           		   th:classappend="${#fields.hasErrors('title')} ? ' input-error' : ''">
+		
+			 <small class="error-message"
+           			th:if="${#fields.hasErrors('title')}"
+           			th:errors="*{title}">
+    		</small>
+		</td>
 	</tr>		
 
 	<tr>
 		<td>Author</td>
-		<td><input type="text" th:field="*{author}"></td>
+		<td>
+			<input type="text" 
+				   id="author"
+				   th:field="*{author}"
+				   th:classappend="${#fields.hasErrors('author')} ? 'input-error' : ''">
+				   
+		    <small class="error-message"
+		    	   th:if="${#fields.hasErrors('author')}"
+		    	   th:errors="*{author}">
+		    </small>
+		</td>
 	</tr>
 
 	<tr>
 		<td>ISBN</td>
-		<td><input type="text" th:field="*{isbn}"></td>
+		<td>
+			<input type="text" 
+				   id="isbn"
+				   th:field="*{isbn}"
+				   th:classappend="${#fields.hasErrors('isbn')} ? 'input-error' : ''">
+				   
+			<small class="error-message"
+				   th:if="${#fields.hasErrors('isbn')}"
+				   th:errors="*{isbn}">
+			</small>
+		</td>
 	</tr>		
 
 	<tr>
 		<td>Publication Year</td>
-		<td><input type="number" th:field="*{publicationYear}"></td>
+		<td>
+			<input type="number" 
+				   id="publicationYear"
+				   th:field="*{publicationYear}"
+				   th:classappen="${#fields.hasErrors('publicationYear')} ? 'input-error' : ''">
+				   
+			<small class="errro-message"
+				   th:if="${#fields.hasErrors('publicationYear')}"
+				   th:errors="*{publicationYear}">
+			</small>
+		</td>
 	</tr>	
 	
 	<tr>
