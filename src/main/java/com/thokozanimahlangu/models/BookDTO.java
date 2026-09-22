@@ -22,16 +22,16 @@ public class BookDTO {
 
 	private UUID id;
 	
-	@NotBlank
+	@NotBlank(message = "Please enter the book title")
 	private String title;
 	
-	@NotBlank
+	@NotBlank(message = "Please enter the author's name")
 	private String author;
 	
-	@NotNull
+	@NotNull(message = "Please enter the publication Year")
 	private Integer publicationYear;
 	
-	@NotBlank
+	@NotBlank(message = "Please enter the ISBN")
 	private String isbn;
 	
 	@Builder.Default
