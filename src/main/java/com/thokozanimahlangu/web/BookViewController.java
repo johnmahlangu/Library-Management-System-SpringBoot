@@ -104,7 +104,7 @@ public class BookViewController {
 	 * @return a redirect path on success, or the form view path if validation fails
 	 */
 	@PostMapping(BOOKS_PATH)
-	public String saveBook(@Valid @ModelAttribute BookDTO bookDto, BindingResult result) {
+	public String saveBook(@Valid @ModelAttribute("createBook") BookDTO bookDto, BindingResult result) {
 		// If validation constraints fail, return to the create book form
 		if(result.hasErrors()) {
 			return CREATE_BOOK_VIEW;
