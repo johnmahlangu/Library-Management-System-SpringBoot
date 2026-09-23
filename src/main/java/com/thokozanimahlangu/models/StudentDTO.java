@@ -21,13 +21,13 @@ public class StudentDTO {
 
 	private UUID id;
 	
-	@NotBlank
+	@NotBlank(message = "Please enter the first name")
 	private String firstName;
 	
-	@NotBlank
+	@NotBlank(message = "Please enter the last name")
 	private String lastName;
 	
-	@NotBlank
+	@NotBlank(message = "Please enter the email address")
 	private String email;
 	
 	private LocalDateTime createdDate;
