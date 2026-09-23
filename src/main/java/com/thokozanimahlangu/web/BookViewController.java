@@ -141,7 +141,7 @@ public class BookViewController {
 	 * @return the edit view if validation fails, or a redirect string if successful
 	 */
 	@PostMapping(UPDATE_BOOK)
-	public String updateBook(@PathVariable UUID bookId, @Valid @ModelAttribute BookDTO bookDto, BindingResult result) {
+	public String updateBook(@PathVariable UUID bookId, @Valid @ModelAttribute("editBook") BookDTO bookDto, BindingResult result) {
 		// If validation constraints fail, return to the edit form
 		if(result.hasErrors()) {
 			return EDIT_BOOK_VIEW;

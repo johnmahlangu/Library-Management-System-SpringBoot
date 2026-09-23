@@ -97,7 +97,7 @@ public class StudentViewController {
 	 * @return a redirect path on success, or the form view path if validation fails
 	 */
 	@PostMapping(STUDENTS_PATH)
-	public String saveStudent(@Valid @ModelAttribute StudentDTO studentDto, BindingResult result) {
+	public String saveStudent(@Valid @ModelAttribute("createStudent") StudentDTO studentDto, BindingResult result) {
 		
 		// If validation constraints fail, return to the create student form
 		if(result.hasErrors()) {
@@ -133,7 +133,7 @@ public class StudentViewController {
 	 * @return the edit view if validation fails, or a redirect string if successful
 	 */
 	@PostMapping(UPDATE_STUDENT_PATH)
-	public String updateStudent(@PathVariable UUID studentId, @ModelAttribute StudentDTO studentDto, BindingResult result) {
+	public String updateStudent(@PathVariable UUID studentId, @ModelAttribute("editStudent") StudentDTO studentDto, BindingResult result) {
 		// If validation constraints fail, return to the edit form
 		if(result.hasErrors()) {
 			return EDIT_STUDENT_VIEW;
