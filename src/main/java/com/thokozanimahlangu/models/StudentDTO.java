@@ -3,6 +3,7 @@ package com.thokozanimahlangu.models;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class StudentDTO {
 	@NotBlank(message = "Please enter the last name")
 	private String lastName;
 	
+	@Email(message = "Please enter a valid email address")
 	@NotBlank(message = "Please enter the email address")
 	private String email;
 	
