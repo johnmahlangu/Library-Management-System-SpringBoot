@@ -30,7 +30,7 @@ public class IssueBookViewController {
 	public static final String ACTIVE_ISSUES_VIEW = "issues/active";
 	public static final String ISSUES_VIEW = "issues/list";
 	public static final String ISSUE_PATH_ID = ISSUES_PATH + "/{issueId}";
-	public static final String ISSUE_RECORD_VIEW = "issues/records";
+	public static final String ISSUE_RECORD_VIEW = "issues/record";
 	public static final String CREATE_ISSUE = ISSUES_PATH + "/create";
 	public static final String CREATE_ISSUE_VIEW = "issues/create";
 	public static final String ISSUES_PATH_REDIRECT = "redirect:/issues";
@@ -81,7 +81,7 @@ public class IssueBookViewController {
 		
 		IssueBookResponseDTO issue = issueBookService.getIssueBookById(issueId).orElseThrow(NotFoundException::new);
 		// add the issue record to the model
-		model.addAttribute("issueRecords", issue);
+		model.addAttribute("record", issue);
 		// Render the issue record HTML template
 		return ISSUE_RECORD_VIEW;
 	}	
