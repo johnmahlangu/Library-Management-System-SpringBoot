@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="www.thymeleaf.org">
-<head th:replace = "~{fragments/head :: head('Edit Student')}"></head>
+<head th:replace = "~{fragments/head :: head('Edit Student Details')}"></head>
 
 <body>
 
-<h2>Edit Student</h2>
+<h2>Edit Student Details</h2>
 
 <hr>
 
@@ -16,17 +16,17 @@
 
 	<tr>
 		<td>First Name</td>
-		<td><input type="text" name="firstName"></td>
+		<td><input type="text" th:field="*{firstName}"></td>
 	</tr>
 	
 	<tr>
 		<td>Last Name</td>
-		<td><input type="text" name="lastName"></td>
+		<td><input type="text" th:field="*{lastName}"></td>
 	</tr>
 	
 	<tr>
 		<td>Email</td>
-		<td><input type="text" name="email"></td>
+		<td><input type="text" th:field="*{email}"></td>
 	</tr>
 	
 	<tr>
