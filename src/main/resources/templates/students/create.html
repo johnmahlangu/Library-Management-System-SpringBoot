@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Add Student')}">
+
+<body>
+
+<h2>Add New Student</h2>
+
+<hr>
+
+<form th:action = "@{/students}"
+	  method = "post"
+	  th:object = "${createStudent}">
+	  
+<table>
+
+	<tr>
+		<td>First Name</td>
+		<td>
+			<input type="text" 
+				   id="firstName"
+				   th:field="*{firstName}"
+				   th:classappend="${#fields.hasErrors('firstName')} ? 'input-error' : ''">
+				   
+			<small class="error-message"
+			   	   th:if="${#fields.hasErrors('firstName')}"
+			   	   th:errors="*{firstName}">
+			</small>
+		</td>
+	</tr>
+	
+	<tr>
+		<td>Last Name</td>
+		<td>
+			<input type="text" 
+				   id="lastName"
+				   th:field="*{lastName}"
+				   th:classappend="${#fields.hasErrors('lastName')} ? 'input-error' : ''">
+				   
+			<small class="error-message"
+				   th:if="${#fields.hasErrors('lastName')}"
+				   th:errors="*{lastName}">
+			</small>
+        </td>
+	</tr>
+	
+	<tr>
+		<td>Email</td>
+		<td>
+			<input type="text" 
+		           id="email"
+		           th:field="*{email}"
+		           th:classappend="${#fields.hasErrors('email')} ? 'input-error' : ''">
+		           
+		    <small class="error-message"
+		    	   th:if="${#fields.hasErrors('email')}"
+		    	   th:errors="*{email}">
+		    </small>
+		</td>
+	</tr>
+	
+	<tr>	
+		<td colspan="2">
+		<button type="submit">Save Student</button>		
+		<a th:href="@{/students}">Cancel</a>
+		</td>
+	</tr>
+	
+</table>
+</form>
+</body>
+</html>

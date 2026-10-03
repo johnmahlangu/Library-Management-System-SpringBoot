@@ -147,7 +147,7 @@ public class IssueBookServiceJPA implements IssueBookService{
 	 */
 	public List<IssueBookResponseDTO> listReturnedBooks() {
 		
-		return issueBookRepository.findByReturnDateIsNull()
+		return issueBookRepository.findByReturnDateIsNotNull()
 								  .stream()
 								  .map(returnedBook -> issueBookMapper.issueBookToIssueBookResponseDTO(returnedBook))
 								  .collect(Collectors.toList());

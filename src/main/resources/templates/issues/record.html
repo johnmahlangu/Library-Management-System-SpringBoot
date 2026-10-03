@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Record Details')}"></head>
+
+<body>
+
+<h2>Record Details</h2>
+
+<hr>
+
+<table border="1">
+
+	<tr>
+		<td>Student</td>
+		<td th:text = "${record.firstName + ' ' + record.lastName}"></td>
+	</tr>
+	
+	<tr>
+		<td>Book Title</td>
+		<td th:text="${record.bookTitle}"></td>
+	</tr>
+	
+	<tr>
+		<td>Issue Date</td>
+		<td th:text="${record.issueDate}"></td>
+	</tr>
+	
+	<tr>
+		<td>Due Date</td>
+		<td th:text="${record.dueDate}"></td>
+	</tr>
+	
+	<tr>
+		<td>Return Date</td>
+		<td th:text="${record.returnDate}"></td>
+	</tr>
+	
+	<tr>
+		<td>Status</td>
+		<td th:text="${record.status}"></td>
+	</tr>
+	
+</table>
+
+<br>
+
+<form th:if="${record.returnDate == null}"
+	  th:action="@{/issues/return/{issueId}(issueId=${record.id})}"
+	  method="post">
+					  
+	  <button type="submit">
+		Return
+	  </button>
+</form>
+
+<a th:href = "@{/issues}">Back to Issues List</a>
+</body>
+</html>

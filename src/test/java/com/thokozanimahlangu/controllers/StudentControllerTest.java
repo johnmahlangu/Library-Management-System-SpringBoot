@@ -79,8 +79,7 @@ class StudentControllerTest {
 			   .andExpect(jsonPath("$.firstName", is(studentDto.getFirstName())))
 			   .andExpect(jsonPath("$.lastName", is(studentDto.getLastName())))
 			   .andExpect(jsonPath("$.email", is(studentDto.getEmail())));					   		   
-	}
-	
+	}	
 	/**
 	 * Verifies that searching for a non-existent student ID correctly yields a 404 Not Found status.
 	 */
@@ -91,15 +90,14 @@ class StudentControllerTest {
 		
 		mockMvc.perform(get(StudentController.STUDENT_PATH_ID, UUID.randomUUID()))
 			   .andExpect(status().isNotFound());
-	}
-	
+	}	
 	/**
 	 * Verifies that pulling a collection of books returns the expected list and size with a 200 Ok status.
 	 */
 	@Test
 	void listStudents() throws Exception {
 		
-		given(studentService.listStudents(any(), any(), any())).willReturn(List.of(createValidStudent(), createValidStudent()));
+		given(studentService.listStudents(any(), any(), any(), any())).willReturn(List.of(createValidStudent(), createValidStudent()));
 		
 		mockMvc.perform(get(StudentController.STUDENT_PATH)
 			   .accept(MediaType.APPLICATION_JSON))
@@ -107,7 +105,6 @@ class StudentControllerTest {
 			   .andExpect(content().contentType(MediaType.APPLICATION_JSON))
 			   .andExpect(jsonPath("$.length()", is(2)));
 	}
-	
 	/**
 	 * Verifies that a valid student creation request returns a 201 Created status,
 	 * includes a Location header, and correctly passes data down to the service layer.
@@ -132,8 +129,7 @@ class StudentControllerTest {
 								.usingRecursiveComparison()
 								.ignoringFields("createdDate", "updateDate")
 								.isEqualTo(studentDto);
-	}
-	
+	}	
 	/**
 	 * Verifies that a POST request with missing required fields triggers MethodArgumentNotValidException and returns a 400 Bad Request.
 	 */
@@ -148,8 +144,7 @@ class StudentControllerTest {
 				   .content(objectMapper.writeValueAsString(studentDto)))
 				   .andExpect(status().isBadRequest())
 				   .andDo(print());
-	}
-	
+	}	
 	/**
 	 * Verifies that updating an existing student returns a 204 No Content status
 	 */
@@ -173,8 +168,7 @@ class StudentControllerTest {
 								.usingRecursiveComparison()
 								.ignoringFields("createdDate", "updateDate")
 								.isEqualTo(studentDto);
-	}
-	
+	}	
 	/**
 	 * Verifies that a PUT request with blank fields for validation-sensitive fields triggers MethodArgumentNotValidException and returns a 400 Bad Request.
 	 */
@@ -191,8 +185,7 @@ class StudentControllerTest {
 				   .content(objectMapper.writeValueAsString(studentDto)))
 				   .andExpect(status().isBadRequest())
 				   .andDo(print());
-	}
-	
+	}	
 	/**
 	 * Verifies that a PATCH request partially updates target parameters with a 204 No Content.
 	 */
@@ -214,8 +207,7 @@ class StudentControllerTest {
 		
 		verify(studentService).patchStudentById(eq(originalStudentId), studentCaptor.capture());
 		assertThat(patchedStudent.get("firstName")).isEqualTo(studentCaptor.getValue().getFirstName());		
-	}
-	
+	}	
 	/**
 	 * Verifies a DELETE request targeting a specific ID deletes  the record and yields a 204 No Content status.
 	 */
@@ -230,8 +222,7 @@ class StudentControllerTest {
 		mockMvc.perform(delete(StudentController.STUDENT_PATH_ID, studentId)
 			   .accept(MediaType.APPLICATION_JSON))
 			   .andExpect(status().isNoContent());
-	}
-	
+	}	
 	/**
 	 * Helper method to instantiate a fully-formed, valid StudentDTO sample 
 	 */

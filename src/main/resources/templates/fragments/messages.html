@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="message">
+	<!-- Success message -->
+	<div th:if="${successMessage}">
+		<p th:text="${successMessage}"></p>
+	</div>
+	
+	<!-- Error message -->
+	<div th:if="${errorMessage}">
+		<p th:text="${errorMessage}"></p>
+	</div>
+</div>
+</body>
+</html>

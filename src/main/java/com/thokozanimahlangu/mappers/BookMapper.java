@@ -1,6 +1,7 @@
 package com.thokozanimahlangu.mappers;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import com.thokozanimahlangu.entities.Book;
 import com.thokozanimahlangu.models.BookDTO;
@@ -22,6 +23,7 @@ public interface BookMapper {
      * Converts a BookDTO back into a Book entity.
      * Used when receiving data from the client to be saved or updated in the database.
      */
+	@Mapping(target = "issuedBooks", ignore = true)
 	Book bookDTOtoBook(BookDTO bookDto);
 	
 }
